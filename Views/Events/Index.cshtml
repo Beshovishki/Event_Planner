@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EventPlanner.Models.Event>
+
+@{
+    ViewData["Title"] = "Събития";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a href="@Url.Action("Create", "Events")">Създаване на ново събитие</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Име на събитието</th>
+            <th>Дата и час</th>
+            <th>Място</th>
+            <th>Описание</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EventName</td>
+                <td>@item.EventDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.EventPlace</td>
+                <td>@item.Description</td>
+                <td>@item.EventID</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Events", new { id = item.EventID })">Редактирай</a> |
+                    <a href="@Url.Action("Delete", "Events", new { id = item.EventID })">Изтрий</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

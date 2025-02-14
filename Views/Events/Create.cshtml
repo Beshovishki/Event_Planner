@@ -1,0 +1,42 @@
+﻿@model EventPlanner.Models.Event
+
+@{
+    ViewData["Title"] = "Създаване на събитие";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Събитие</h4>
+<hr />
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="EventName" class="control-label">Заглавие</label>
+        <input asp-for="EventName" class="form-control" />
+        <span asp-validation-for="EventName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EventDate" class="control-label">Дата</label>
+        <input asp-for="EventDate" class="form-control" />
+        <span asp-validation-for="EventDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EventPlace" class="control-label">Място на събитието</label>
+        <input asp-for="EventPlace" class="form-control" />
+        <span asp-validation-for="EventPlace" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">Описание</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Създай</button>
+        <a asp-action="Index" class="btn btn-secondary">Откажи</a>
+    </div>
+</form>
+

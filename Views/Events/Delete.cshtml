@@ -1,0 +1,22 @@
+﻿@model EventPlanner.Models.Event
+
+@{
+    ViewData["Title"] = "Delete Event";
+}
+
+<h1>Сигурни ли сте че искате да изтриете?</h1>
+
+<h4>
+    Събитие <strong>@Model.EventName</strong></h4>
+<div>
+    <p><strong>Date:</strong> @Model.EventDate.ToString("yyyy-MM-dd")</p>
+    <p><strong>Place:</strong> @Model.EventPlace</p>
+    <p><strong>Description:</strong> @Model.Description</p>
+</div>
+
+
+<form asp-action="Delete" method="post" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете събитието?');">
+    <input type="hidden" asp-for="EventID" />
+    <button type="submit" class="btn btn-danger">Изтрий</button>
+    <a asp-action="Index" class="btn btn-secondary">Откажи</a>
+</form>
