@@ -1,0 +1,16 @@
+﻿@model Guest
+
+<form asp-action="Invitation" method="post" asp-route-id="@Model.GuestID">
+    <div class="form-group">
+        <label for="EventID">Изберете събитие</label>
+        <select asp-for="EventID" class="form-control">
+            <option value="">Изберете събитие</option>
+            @foreach (var item in ViewData["Events"] as SelectList)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Изпрати покана</button>
+</form>

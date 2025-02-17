@@ -3,9 +3,9 @@
     public class EventTask
     {
         public int EventTaskID { get; set; }
-        public string? TaskDescription { get; set; }
-        public string? AssignedTo { get; set; }
-        public string? TaskStatus { get; set; }
+        public string? TaskDescription { get; set; } = string.Empty;
+        public string? AssignedTo { get; set; } = string.Empty;
+        public string? TaskStatus { get; set; } = string.Empty;
 
         // Връзка към събитие (много към едно)
         public int? EventID { get; set; }

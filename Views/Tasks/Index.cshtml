@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EventPlanner.Models.EventTask>
+
+@{
+    ViewData["Title"] = "Задачи";
+}
+
+<h1>Задачи</h1>
+
+<p>
+    <a href="@Url.Action("Create", "Tasks")" class="btn btn-primary">Добавяне на задача</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Описание на задачата</th>
+            <th>Събитие</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.TaskDescription</td>
+                <td>@task.Event.EventName</td>
+                <td>
+                    @switch (task.TaskStatus)
+                    {
+                        case "Not Started":
+                            <text>Изчаква</text>
+                            break;
+                        case "In Progress":
+                            <text>В процес</text>
+                            break;
+                        case "Completed":
+                            <text>Завършено</text>
+                            break;
+                        default:
+                            <text>@task.TaskStatus</text>
+                            break;
+                    }
+                </td>
+                <td>
+                    @* <a asp-action="Edit" asp-route-id="@task.EventTaskID" class="btn btn-warning">Редактирай</a>
+                    <form asp-action="Delete" asp-route-id="@task.EventTaskID" method="post" style="display:inline;"> *@
+                        <a href="@Url.Action("Edit", "Tasks", new { id = task.EventTaskID })" class="btn btn-warning">Редактирай</a> |
+                        <a href="@Url.Action("Delete", "Tasks", new { id = task.EventTaskID  })" class="btn btn-danger">Изтрий</a>
+                     @*    <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="btn btn-danger">Изтрий</button>
+                    </form> *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

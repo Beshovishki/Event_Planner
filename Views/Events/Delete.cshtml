@@ -16,7 +16,7 @@
 
 
 <form asp-action="Delete" method="post" onsubmit="return confirm('Сигурни ли сте, че искате да изтриете събитието?');">
-    <input type="hidden" asp-for="EventID" />
+    <input type="hidden" asp-for="EventID" onclick="return confirmDelete('@Model.EventName');"/>
     <button type="submit" class="btn btn-danger">Изтрий</button>
     <a asp-action="Index" class="btn btn-secondary">Откажи</a>
 </form>

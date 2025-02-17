@@ -14,6 +14,7 @@ namespace EventPlanner
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,6 +35,14 @@ namespace EventPlanner
             app.MapControllerRoute(
                  name: "default",
                   pattern: "{controller=Events}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                 name: "guests",
+                pattern: "Guests/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "tasks",
+                pattern: "Tasks/{action=Index}/{id?}");
 
             app.Run();
         }

@@ -322,4 +322,10 @@ D:\Downloads\GitHub\EventPlanner\obj\Debug\net8.0\refint\EventPlanner.dll
 D:\Downloads\GitHub\EventPlanner\obj\Debug\net8.0\EventPlanner.pdb
 D:\Downloads\GitHub\EventPlanner\obj\Debug\net8.0\EventPlanner.genruntimeconfig.cache
 D:\Downloads\GitHub\EventPlanner\obj\Debug\net8.0\ref\EventPlanner.dll
+D:\Downloads\GitHub\EventPlanner\obj\Debug\net8.0\EventPlanner.sourcelink.json
+D:\Downloads\GitHub\EventPlanner\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\Downloads\GitHub\EventPlanner\bin\Debug\net8.0\MailKit.dll
+D:\Downloads\GitHub\EventPlanner\bin\Debug\net8.0\MimeKit.dll
+D:\Downloads\GitHub\EventPlanner\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\Downloads\GitHub\EventPlanner\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 D:\Downloads\GitHub\EventPlanner\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

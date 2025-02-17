@@ -7,7 +7,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>
-    <a href="@Url.Action("Create", "Events")">Създаване на ново събитие</a>
+    <a href="@Url.Action("Create", "Events")" class="btn btn-primary">Създаване на ново събитие</a>
 </p>
 
 <table class="table">
@@ -30,8 +30,14 @@
                 <td>@item.Description</td>
                 <td>@item.EventID</td>
                 <td>
-                    <a href="@Url.Action("Edit", "Events", new { id = item.EventID })">Редактирай</a> |
-                    <a href="@Url.Action("Delete", "Events", new { id = item.EventID })">Изтрий</a>
+                    <a href="@Url.Action("Edit", "Events", new { id = item.EventID })" class="btn btn-warning">Редактирай</a> |
+                    <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" class="btn btn-danger">Изтрий</a>
+
+                    @* <a asp-action="Edit" asp-route-id="@item.EventID" class="btn btn-warning">Редактирай</a>
+                    <form asp-action="Delete" asp-route-id="@item.EventID" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="btn btn-danger">Изтрий</button>
+                        </form> *@
                 </td>
             </tr>
         }

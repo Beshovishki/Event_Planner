@@ -1,0 +1,16 @@
+﻿@model EventPlanner.Models.EventTask
+
+@{
+    ViewData["Title"] = "Потвърди изтриването";
+}
+
+<h1>Сигурни ли сте, че искате да изтриете тази задача?</h1>
+
+<p>Задача: @Model.TaskDescription</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="EventTaskID" />
+    <button type="submit" class="btn btn-danger">Да, изтрий</button>
+
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Откажи</a>
+</form>

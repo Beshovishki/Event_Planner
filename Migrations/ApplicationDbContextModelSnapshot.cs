@@ -24,6 +24,7 @@ namespace EventPlanner.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EventDate")
@@ -34,6 +35,7 @@ namespace EventPlanner.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EventPlace")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("EventID");
@@ -78,15 +80,18 @@ namespace EventPlanner.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("EventID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("GuestName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RSVPStatus")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("GuestID");
@@ -122,7 +127,8 @@ namespace EventPlanner.Migrations
                 {
                     b.HasOne("EventPlanner.Models.Event", "Event")
                         .WithMany("EventTasks")
-                        .HasForeignKey("EventID");
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EventPlanner.Models.Guest", "Guest")
                         .WithMany()
@@ -137,7 +143,8 @@ namespace EventPlanner.Migrations
                 {
                     b.HasOne("EventPlanner.Models.Event", "Event")
                         .WithMany("Guests")
-                        .HasForeignKey("EventID");
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Event");
                 });
@@ -146,7 +153,8 @@ namespace EventPlanner.Migrations
                 {
                     b.HasOne("EventPlanner.Models.Event", "Event")
                         .WithMany("Ratings")
-                        .HasForeignKey("EventID");
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Event");
                 });
