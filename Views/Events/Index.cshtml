@@ -17,7 +17,7 @@
             <th>Дата и час</th>
             <th>Място</th>
             <th>Описание</th>
-            <th></th>
+            <th>Средна Оценка</th>
         </tr>
     </thead>
     <tbody>
@@ -27,19 +27,53 @@
                 <td>@item.EventName</td>
                 <td>@item.EventDate.ToString("dd.MM.yyyy HH:mm")</td>
                 <td>@item.EventPlace</td>
-                <td>@item.Description</td>
-                <td>@item.EventID</td>
                 <td>
-                    <a href="@Url.Action("Edit", "Events", new { id = item.EventID })" class="btn btn-warning">Редактирай</a> |
-                    <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" class="btn btn-danger">Изтрий</a>
-
-                    @* <a asp-action="Edit" asp-route-id="@item.EventID" class="btn btn-warning">Редактирай</a>
-                    <form asp-action="Delete" asp-route-id="@item.EventID" method="post" style="display:inline;">
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <button type="submit" class="btn btn-danger">Изтрий</button>
-                        </form> *@
+                    @{
+                        var shortDescription = item.Description.Length > 55 ? item.Description.Substring(0, 55) + "..." : item.Description;
+                    }
+                    <div id="description-@item.EventID" class="description-short">
+                        @shortDescription
+                    </div>
+                    @if (item.Description.Length > 55)
+                    {
+                        <button class="btn btn-link" onclick="toggleDescription(event, @item.EventID)">Повече</button>
+                    }
+                    <div id="full-description-@item.EventID" class="description-full" style="display:none;">
+                        @item.Description
+                    </div>
+                </td>
+                <td>
+                    @if (item.Ratings != null && item.Ratings.Any())
+                    {
+                        var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
+                        <span>@avgRating</span>
+                    }
+                    else
+                    {
+                        <span>Без оценка</span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Events", new { id = item.EventID })" class="btn btn-warning" style = "margin-right: 10px;">Редактирай</a>
+                    <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" class="btn btn-danger" style="margin-right: 10px;">Изтрий</a>
+                    <a href="@Url.Action("Rate", "Events", new { id = item.EventID })" class="btn btn-success">Оценете</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<script>
+    function toggleDescription(event, eventId) {
+        var button = event.target;
+        var fullDescription = document.getElementById("full-description-" + eventId);
+
+        // Превключваме видимостта на пълното описание
+        if (fullDescription.style.display === "none") {
+            fullDescription.style.display = "block";
+            button.innerText = "По-малко";
+        } else {
+            fullDescription.style.display = "none";
+            button.innerText = "Повече";
+        }
+    }
+</script>

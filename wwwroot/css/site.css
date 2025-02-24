@@ -20,3 +20,32 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+/*--------------------------------------------------------*/
+
+
+.description-short {
+    display: inline-block;
+    width: 300px; /* Може да промените ширината според нуждите */
+    white-space: nowrap; /* Не позволявайте на текста да се прехвърля на нов ред */
+    overflow: hidden; /* Скриваме текста, който не се побира */
+    text-overflow: ellipsis; /* Добавяне на многоточие в края */
+}
+
+.description-full {
+    white-space: normal; /* Позволява текстът да се прехвърля на нови редове */
+    margin-top: 10px;
+    max-width: 500px; /* Ограничаваме ширината, за да не разширяваме реда */
+    overflow: hidden; /* Скриваме излишния текст, ако е необходимо */
+}
+
+.event-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px; /* Разстояние между бутоните */
+}
+
+    .event-actions a {
+        margin-right: 10px;
+    }

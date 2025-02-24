@@ -1,0 +1,18 @@
+﻿@model EventPlanner.Models.Rating
+
+<h1>Оценете събитието</h1>
+
+<form asp-action="Rate" method="post">
+    <div class="form-group">
+        <label for="RatingValue">Оценка (1-5)</label>
+        <input type="number" class="form-control" id="RatingValue" name="RatingValue" min="1" max="5" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Comments">Коментар (по избор)</label>
+        <textarea class="form-control" id="Comments" name="Comments"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 10px">Дайте оценка</button>
+</form>
+

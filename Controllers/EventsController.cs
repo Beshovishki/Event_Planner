@@ -1,4 +1,5 @@
-﻿using EventPlanner.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using EventPlanner.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,10 @@ namespace EventPlanner.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Events.ToListAsync());
+            var events = await _context.Events
+        .Include(e => e.Ratings) // Зарежда всички оценки за всяко събитие
+        .ToListAsync();
+            return View(events);
         }
 
         // GET: Events/Create
@@ -127,6 +131,41 @@ namespace EventPlanner.Controllers
             _context.Events.Remove(eventModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Events/Rate/5
+        // GET: Events/Rate/5
+        public IActionResult Rate(int id)
+        {
+            var eventModel = _context.Events.Find(id);
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(new Rating { EventID = id });
+        }
+
+        // POST: Events/Rate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Rate(int id, [Bind("RatingValue, Comments")] Rating rating)
+        {
+            var eventModel = _context.Events.Find(id);
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                rating.EventID = id;
+                _context.Ratings.Add(rating);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));  // Пренасочване след успешен запис
+            }
+
+            return View(rating);  // Връща формата за повторно попълване, ако има грешки
         }
 
         private bool EventExists(int id)

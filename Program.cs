@@ -43,6 +43,9 @@ namespace EventPlanner
             app.MapControllerRoute(
                 name: "tasks",
                 pattern: "Tasks/{action=Index}/{id?}");
+            app.MapControllerRoute(
+                name: "rating",
+                pattern: "{controller=Events}/{action=Rate}/{id?}");
 
             app.Run();
         }

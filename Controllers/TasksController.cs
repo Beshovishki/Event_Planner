@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventPlanner.Controllers.TaskController
 {
-    
+
     public class TasksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -16,7 +16,7 @@ namespace EventPlanner.Controllers.TaskController
         }
 
         // GET: EventTask
-        
+
         public async Task<IActionResult> Index()
         {
             var tasks = await _context.EventTasks.Include(t => t.Event).ToListAsync();
@@ -33,7 +33,7 @@ namespace EventPlanner.Controllers.TaskController
         // POST: EventTask/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TaskDescription,TaskStatus,EventID")] EventTask eventTask)
+        public async Task<IActionResult> Create([Bind("TaskDescription,TaskStatus,EventID, AssignedTo")] EventTask eventTask)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace EventPlanner.Controllers.TaskController
         // POST: EventTask/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventTaskID,TaskDescription,TaskStatus,EventID")] EventTask eventTask)
+        public async Task<IActionResult> Edit(int id, [Bind("EventTaskID,TaskDescription,TaskStatus,EventID, AssignedTo")] EventTask eventTask)
         {
             if (id != eventTask.EventTaskID)
             {
@@ -127,6 +127,8 @@ namespace EventPlanner.Controllers.TaskController
 
             return RedirectToAction(nameof(Index));
         }
+        
+
 
         private bool EventTaskExists(int id)
         {

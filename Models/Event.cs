@@ -10,9 +10,14 @@ namespace EventPlanner.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]  // Автоматично генериране на стойност за EventID
 
         public int EventID { get; set; }
+        [Required(ErrorMessage = "Моля, въведете име на събитието.")]
         public string EventName { get; set; } = string.Empty;
-        public DateTime EventDate { get; set; }
+        [Required(ErrorMessage = "Моля, въведете дата за събитието.")]
+        [DataType(DataType.Date, ErrorMessage = "Моля, въведете валидна дата.")]
+        public DateTime EventDate { get; set; } = DateTime.Now;
+        [Required(ErrorMessage = "Моля, въведете място на събитието.")]
         public string EventPlace { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Моля, въведете описание събитието.")]
         public string Description { get; set; } = string.Empty;
 
         // Навигационно свойство за гостите (едно към много)

@@ -15,11 +15,12 @@
         <input asp-for="EventName" class="form-control" />
         <span asp-validation-for="EventName" class="text-danger"></span>
     </div>
-
+    
     <div class="form-group">
         <label asp-for="EventDate" class="control-label">Дата</label>
         <input asp-for="EventDate" class="form-control" />
         <span asp-validation-for="EventDate" class="text-danger"></span>
+
     </div>
 
     <div class="form-group">
@@ -37,5 +38,23 @@
         <button type="submit" class="btn btn-primary">Създай</button>
         <a asp-action="Index" class="btn btn-secondary">Откажи</a>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const dateField = document.querySelector("[name='EventDate']");
+            const validationMessage = document.querySelector("[data-valmsg-for='EventDate']");
+
+            if (dateField && validationMessage) {
+                dateField.addEventListener("invalid", function(event) {
+                    event.preventDefault(); // Спира стандартното съобщение
+                    validationMessage.textContent = "Моля, въведете дата на събитието.";
+                });
+
+                // За да прихванем и грешката от сървърната страна при submit
+                dateField.addEventListener("input", function () {
+                    validationMessage.textContent = ""; // Изчиства съобщението при корекция
+                });
+            }
+        });
+    </script>
 </form>
 
