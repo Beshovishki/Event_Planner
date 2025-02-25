@@ -18,28 +18,48 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    overflow-y: scroll;
 }
 
 
 /*--------------------------------------------------------*/
-
-
-.description-short {
+.container {
+    max-width: 95%;
+    padding: 20px;
+    box-sizing: content-box; /* Пример за промяна на box-sizing */
+    margin-right:5px;
+    margin-left: 5px;
+}
+table {
+    width: 100vw; /* Заема цялата видима ширина на прозореца */
+}
+td{
+    max-width: 190px;
+}
+.assessment{
+    max-width: 10px
+}
+.description-short, .eventPlace-short, .eventName-short {
     display: inline-block;
-    width: 300px; /* Може да промените ширината според нуждите */
+    width: 190px; /* Може да промените ширината според нуждите */
     white-space: nowrap; /* Не позволявайте на текста да се прехвърля на нов ред */
     overflow: hidden; /* Скриваме текста, който не се побира */
     text-overflow: ellipsis; /* Добавяне на многоточие в края */
 }
 
-.description-full {
+.btn-primary {
+    margin-right: 2px;
+}
+.description-full, .eventPlace-full, .eventName-full {
     white-space: normal; /* Позволява текстът да се прехвърля на нови редове */
-    margin-top: 10px;
     max-width: 500px; /* Ограничаваме ширината, за да не разширяваме реда */
     overflow: hidden; /* Скриваме излишния текст, ако е необходимо */
 }
 
+.btn-link{
+    padding: 3px 6px;
+}
 .event-actions {
     display: flex;
     justify-content: flex-start;

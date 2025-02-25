@@ -230,10 +230,10 @@ namespace EventPlanner.Controllers.GuestController
             switch (guest.RSVPStatus)
             {
                 case "Accepted":
-                    guest.RSVPStatus = "Потвърдено";
+                    guest.RSVPStatus = "Потвърдил";
                     break;
                 case "Declined":
-                    guest.RSVPStatus = "Отказано";
+                    guest.RSVPStatus = "Отказл";
                     break;
                 case "Pending":
                     guest.RSVPStatus = "В очакване";

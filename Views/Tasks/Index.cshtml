@@ -17,6 +17,7 @@
             <th>Отговорник</th>
             <th>Събитие</th>
             <th>Статус</th>
+            <th></th>
             
         </tr>
     </thead>
@@ -45,8 +46,10 @@
                     }
                 </td>
                 <td>
+                    <div class="d-flex gap-2">
                     <a href="@Url.Action("Edit", "Tasks", new { id = task.EventTaskID })" class="btn btn-warning" style="margin-right: 10px;">Редактирай</a>
                     <a href="@Url.Action("Delete", "Tasks", new { id = task.EventTaskID  })" class="btn btn-danger">Изтрий</a>
+                    </div>
                 </td>
             </tr>
         }

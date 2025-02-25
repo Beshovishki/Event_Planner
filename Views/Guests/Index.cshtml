@@ -8,39 +8,41 @@
     <a href="@Url.Action("Create", "Guests")" class="btn btn-primary">Добавяне на гост</a>
 </p>
 <table class="table">
-<thead>
-    <tr>
-        <th>Име на гост</th>
-        <th>Email</th>
-        <th>Статус</th>
-        <th></th>
-    </tr>
-</thead>
-<tbody>
+    <thead>
+        <tr>
+            <th>Име на гост</th>
+            <th>Email</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
         @foreach (var guest in Model)
         {
             <tr>
                 <td>@guest.GuestName</td>
                 <td>@guest.Email</td>
                 <td>
-                @switch (guest.RSVPStatus)
-                {
-                    case "Invited":
-                        <text>Поканен</text>
-                        break;
+                    @switch (guest.RSVPStatus)
+                    {
+                        case "NotInvited":
+                            <text>В очакване</text>
+                            break;
+                        case "Invited":
+                            <text>Поканен</text>
+                            break;
                         case "Confirmed":
-                        <text>Потвърдил</text>
+                            <text>Потвърдил</text>
                         break;
                         case "Declined":
-                        <text>Отказал</text>
-                        break;
-                    default:
+                            <text>Отказал</text>
+                            break;
+                        default:
                             <text>@guest.RSVPStatus</text>
                         break;
                 }
                 </td>
                 <td>
-                    
                     <div class="d-flex gap-2">
                         <a href="@Url.Action("Edit", "Guests", new { id = guest.GuestID })" class="btn btn-warning">Редактирай</a>
                         <form href="@Url.Action("Invitation", "Guests", new { id = guest.GuestID })" class="btn btn-primary">

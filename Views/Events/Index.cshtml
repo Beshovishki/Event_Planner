@@ -14,35 +14,55 @@
     <thead>
         <tr>
             <th>Име на събитието</th>
-            <th>Дата и час</th>
+            <th style="width: 150px">Дата и час</th>
             <th>Място</th>
             <th>Описание</th>
-            <th>Средна Оценка</th>
+            <th style="width: 136px">Средна Оценка</th>
+            <th style="width: 10px"></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.EventName</td>
-                <td>@item.EventDate.ToString("dd.MM.yyyy HH:mm")</td>
-                <td>@item.EventPlace</td>
                 <td>
                     @{
-                        var shortDescription = item.Description.Length > 55 ? item.Description.Substring(0, 55) + "..." : item.Description;
+                        var shortEventName = item.EventName.Length > 20 ? item.EventName.Substring(0, 20) + "..." : item.EventName;
+                    }
+                    <div id="eventName-@item.EventID" class="eventName-short">
+                        @shortEventName
+                    </div>
+                    <div id="full-eventName-@item.EventID" class="eventName-full" style="display:none;">
+                        @item.EventName
+                    </div>
+                </td>
+                <td>@item.EventDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>
+                    @{
+                        var shortEventPlace = item.EventPlace.Length > 20 ? item.EventPlace.Substring(0, 20) + "..." : item.EventPlace;
+                    }
+                    <div id="eventPlace-@item.EventID" class="eventPlace-short">
+                        @shortEventPlace
+                    </div>
+                    <div id="full-eventPlace-@item.EventID" class="eventPlace-full" style="display:none;">
+                        @item.EventPlace
+                    </div>
+                </td>
+                <td>
+                    @{
+                        var shortDescription = item.Description.Length > 20 ? item.Description.Substring(0, 20) + "..." : item.Description;
                     }
                     <div id="description-@item.EventID" class="description-short">
                         @shortDescription
                     </div>
-                    @if (item.Description.Length > 55)
-                    {
-                        <button class="btn btn-link" onclick="toggleDescription(event, @item.EventID)">Повече</button>
-                    }
+                    
                     <div id="full-description-@item.EventID" class="description-full" style="display:none;">
-                        @item.Description
+                            @item.Description
                     </div>
+                    
                 </td>
-                <td>
+                <td class="assessment">
                     @if (item.Ratings != null && item.Ratings.Any())
                     {
                         var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
@@ -54,26 +74,51 @@
                     }
                 </td>
                 <td>
-                    <a href="@Url.Action("Edit", "Events", new { id = item.EventID })" class="btn btn-warning" style = "margin-right: 10px;">Редактирай</a>
-                    <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" class="btn btn-danger" style="margin-right: 10px;">Изтрий</a>
-                    <a href="@Url.Action("Rate", "Events", new { id = item.EventID })" class="btn btn-success">Оценете</a>
+                    @if (item.Description.Length > 20 || item.EventName.Length > 20 || item.EventPlace.Length > 20)
+                    {
+                        <button class="btn btn-primary" onclick="toggleText(event, @item.EventID)">Преглед</button>
+                    }
+                    
+                </td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <a href="@Url.Action("Edit", "Events", new { id = item.EventID })" class="btn btn-warning" style="margin-right: 10px;">Редактирай</a>
+                        <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" class="btn btn-danger" style="margin-right: 10px;">Изтрий</a>
+                        <a href="@Url.Action("Rate", "Events", new { id = item.EventID })" class="btn btn-success">Оценете</a>
+
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <script>
-    function toggleDescription(event, eventId) {
+    function toggleText(event, eventId) {
         var button = event.target;
         var fullDescription = document.getElementById("full-description-" + eventId);
+        var description = document.getElementById("description-" + eventId);
+        var fullEventName = document.getElementById("full-eventName-" + eventId);
+        var eventName = document.getElementById("eventName-" + eventId);
+        var fullEventPlace = document.getElementById("full-eventPlace-" + eventId);
+        var eventPlace = document.getElementById("eventPlace-" + eventId);
 
-        // Превключваме видимостта на пълното описание
-        if (fullDescription.style.display === "none") {
+        // Превключваме видимостта на пълният текст за всички
+        if (fullDescription.style.display === "none" || fullEventName.style.display === "none" || fullEventPlace.style.display === "none") {
+            eventName.style.display = "none";
+            description.style.display = "none";
+            eventPlace.style.display = "none";
             fullDescription.style.display = "block";
-            button.innerText = "По-малко";
+            fullEventName.style.display = "block";
+            fullEventPlace.style.display = "block";
+            button.innerText = "Затвори";
         } else {
+            eventName.style.display = "block";
+            description.style.display = "block";
+            eventPlace.style.display = "block";
             fullDescription.style.display = "none";
-            button.innerText = "Повече";
+            fullEventName.style.display = "none";
+            fullEventPlace.style.display = "none";
+            button.innerText = "Преглед";
         }
     }
 </script>
