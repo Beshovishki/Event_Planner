@@ -15,12 +15,72 @@ namespace EventPlanner.Controllers
         }
 
         // GET: Events
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(bool showArchived = false)
         {
-            var events = await _context.Events
-        .Include(e => e.Ratings) // Зарежда всички оценки за всяко събитие
-        .ToListAsync();
-            return View(events);
+            // Ако е избрано да се показват архивираните събития
+            if (showArchived)
+            {
+                var archivedEvents = await _context.Events
+                    .Where(e => e.IsArchived == true) // Филтрираме само архивираните събития
+                    .Include(e => e.Ratings) // Зареждаме всички оценки за всяко събитие
+                    .ToListAsync();
+
+                return View(archivedEvents);
+            }
+            else
+            {
+                var events = await _context.Events
+                    .Where(e => e.EventDate >= DateTime.Now || (e.EventDate.AddDays(5) >= DateTime.Now && e.IsArchived == false)) // Включва бъдещи събития и събития, които не са архивирани
+                    .Include(e => e.Ratings) // Зареждаме всички оценки за всяко събитие
+                    .ToListAsync();
+
+                return View(events);
+            }
+
+
+            //// Ако е избрано да се показват архивираните събития
+            //if (showArchived)
+            //{
+            //    var archivedEvents = await _context.Events
+            //        .Where(e => e.EventDate.AddDays(5) < DateTime.Now) // Примерна логика: събития с дата в миналото
+            //        .Include(e => e.Ratings) // Зарежда всички оценки за всяко събитие
+            //        .ToListAsync();
+
+            //    return View(archivedEvents);
+            //}
+            //else
+            //{
+            //    var activeEvents = await _context.Events
+            //        .Where(e => e.EventDate >= DateTime.Now || e.EventDate.AddDays(5) >= DateTime.Now) // Включва бъдещи събития и събития до 5 дни назад
+            //        .Include(e => e.Ratings) // Зарежда всички оценки за всяко събитие
+            //        .ToListAsync();
+
+            //    return View(activeEvents);
+            //}
+        }
+        public async Task ArchiveEvents()
+        {
+            var eventsToArchive = await _context.Events
+                .Where(e => e.EventDate.AddDays(5) < DateTime.Now && !e.IsArchived) // Събития, които са преминали 5 дни и не са архивирани
+                .ToListAsync();
+
+            foreach (var eventItem in eventsToArchive)
+            {
+                eventItem.IsArchived = true; // Маркираме събитието като архивирано
+            }
+
+            await _context.SaveChangesAsync(); // Записваме промените в базата данни
+        }
+        public async Task<IActionResult> Archive()
+        {
+            // Зареждаме събития, които са преминали повече от 5 дни
+            var archivedEvents = await _context.Events
+                .Where(e => e.EventDate.AddDays(5) < DateTime.Now) // Събития, които са завършили преди повече от 5 дни
+                .Include(e => e.Ratings) // Зареждаме оценките
+                .ToListAsync();
+
+            return View(archivedEvents); // Връщаме към изгледа за архивираните събития
         }
 
         // GET: Events/Create
@@ -134,7 +194,6 @@ namespace EventPlanner.Controllers
         }
 
         // GET: Events/Rate/5
-        // GET: Events/Rate/5
         public IActionResult Rate(int id)
         {
             var eventModel = _context.Events.Find(id);
@@ -167,7 +226,10 @@ namespace EventPlanner.Controllers
 
             return View(rating);  // Връща формата за повторно попълване, ако има грешки
         }
-
+        public int GetVoteCount(int eventId)
+        {
+            return _context.Ratings.Count(r => r.EventID == eventId);
+        }
         private bool EventExists(int id)
         {
             return _context.Events.Any(e => e.EventID == id);

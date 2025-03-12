@@ -15,8 +15,9 @@
         <tr>
             <th>Описание на задачата</th>
             <th>Отговорник</th>
-            <th>Събитие</th>
+			<th>Събитие</th>
             <th>Статус</th>
+            <th style="width: 10px"></th>
             <th></th>
             
         </tr>
@@ -25,9 +26,39 @@
         @foreach (var task in Model)
         {
             <tr>
-                <td>@task.TaskDescription</td>
-                <td>@task.AssignedTo</td>
-                <td>@task.Event.EventName</td>
+                <td>
+                    @{
+                        var shortTaskDescription = task.TaskDescription.Length > 20 ? task.TaskDescription.Substring(0, 20) + "..." : task.TaskDescription;
+                    }
+                    <div id="taskDescription-@task.EventTaskID" class="taskDescription-short">
+                        @shortTaskDescription
+                    </div>
+                    <div id="full-taskDescription-@task.EventTaskID" class="taskDescription-full" style="display:none;">
+                        @task.TaskDescription
+                    </div>
+                    </td>
+                <td>
+                    @{
+                        var shortAssignedTo = task.AssignedTo.Length > 20 ? task.AssignedTo.Substring(0, 20) + "..." : task.AssignedTo;
+                    }
+                    <div id="taskAssignedTo-@task.EventTaskID" class="taskAssignedTo-short">
+                        @shortAssignedTo
+                    </div>
+                    <div id="full-taskAssignedTo-@task.EventTaskID" class="taskAssignedTo-full" style="display:none;">
+                        @task.AssignedTo
+                    </div>
+                    </td>
+                <td>
+                    @{
+                        var shortEventName = task.Event.EventName.Length > 20 ? task.Event.EventName.Substring(0, 20) + "..." : task.Event.EventName;
+                    }
+                    <div id="taskEventName-@task.EventTaskID" class="taskEventName-short">
+                        @shortEventName
+                    </div>
+                    <div id="full-taskEventName-@task.EventTaskID" class="taskEventName-full" style="display:none;">
+                        @task.Event.EventName
+                    </div>
+                    </td>
                 <td>
                     @switch (task.TaskStatus)
                     {
@@ -45,6 +76,13 @@
                             break;
                     }
                 </td>
+                <td style="width:50px">
+                    @if (task.TaskDescription.Length > 20 || task.AssignedTo.Length > 20 || task.Event.EventName.Length > 20)
+                    {
+                        <button class="btn btn-primary" onclick="toggleText(this, @task.EventTaskID)">Преглед</button>
+                    }
+
+                </td>
                 <td>
                     <div class="d-flex gap-2">
                     <a href="@Url.Action("Edit", "Tasks", new { id = task.EventTaskID })" class="btn btn-warning" style="margin-right: 10px;">Редактирай</a>
@@ -55,3 +93,31 @@
         }
     </tbody>
 </table>
+<script>
+        function toggleText(button, eventTaskId) {
+        var fullTaskDescription = document.getElementById("full-taskDescription-" + eventTaskId);
+        var taskDescription = document.getElementById("taskDescription-" + eventTaskId);
+        var fullAssignedTo = document.getElementById("full-taskAssignedTo-" + eventTaskId);
+        var taskAssignedTo = document.getElementById("taskAssignedTo-" + eventTaskId);
+        var fullEventName = document.getElementById("full-taskEventName-" + eventTaskId);
+        var taskEventName = document.getElementById("taskEventName-" + eventTaskId);
+
+        if (!fullTaskDescription || !taskDescription || !fullAssignedTo || !taskAssignedTo) {
+            console.error("Missing elements for eventTaskId: " + eventTaskId);
+            return;
+        }
+
+        var isHidden = fullTaskDescription.style.display === "none";
+        taskDescription.style.display = isHidden ? "none" : "block";
+        fullTaskDescription.style.display = isHidden ? "block" : "none";
+        fullAssignedTo.style.display === "none";
+        taskAssignedTo.style.display = isHidden ? "none" : "block";
+        fullAssignedTo.style.display = isHidden ? "block" : "none";
+        fullEventName.style.display === "none";
+        taskEventName.style.display = isHidden ? "none" : "block";
+        fullEventName.style.display = isHidden ? "block" : "none";
+
+        // Промяна на текста на бутона
+        button.innerText = isHidden ? "Затвори" : "Преглед";
+    }
+</script>

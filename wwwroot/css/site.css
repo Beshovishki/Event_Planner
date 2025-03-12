@@ -38,7 +38,7 @@ td{
     max-width: 190px;
 }
 .assessment{
-    max-width: 10px
+    max-width: 200px;
 }
 .description-short, .eventPlace-short, .eventName-short {
     display: inline-block;

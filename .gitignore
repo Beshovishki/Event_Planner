@@ -1,0 +1,12 @@
+# Visual Studio files
+.vs/
+.vscode/
+.idea/
+# Build directories
+bin/
+obj/
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates

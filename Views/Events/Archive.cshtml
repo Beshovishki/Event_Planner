@@ -1,16 +1,5 @@
 ﻿@model IEnumerable<EventPlanner.Models.Event>
-
-@{
-    ViewData["Title"] = "Събития";
-}
-
-<h1>@ViewData["Title"]</h1>
-
-<p>
-    <a href="@Url.Action("Create", "Events")" class="btn btn-primary">Създаване на ново събитие</a>
-    <a href="@Url.Action("Archive", "Events")" class="btn btn-primary">Архив</a>
-</p>
-
+<h1>Минали Събития</h1>
 <table class="table">
     <thead>
         <tr>
@@ -57,11 +46,11 @@
                     <div id="description-@item.EventID" class="description-short">
                         @shortDescription
                     </div>
-                    
+
                     <div id="full-description-@item.EventID" class="description-full" style="display:none;">
-                            @item.Description
+                        @item.Description
                     </div>
-                    
+
                 </td>
                 <td class="assessment">
                     @if (item.Ratings != null && item.Ratings.Any())
@@ -69,7 +58,7 @@
                         <i class="fas fa-users"></i> <span class="badge bg-primary">@item.Ratings.Count() </span>
                         var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
                         <span>@avgRating</span>
-                        
+
                         @* <button class="btn btn-outline-secondary btn-sm"> *@
                         @*     <i class="fas fa-comments"></i> <span class="badge bg-info">Коментари</span> *@
                         @* </button> *@
@@ -84,16 +73,9 @@
                     {
                         <button class="btn btn-primary" onclick="toggleText(this, @item.EventID)">Преглед</button>
                     }
-                    
+
                 </td>
                 <td>
-                    <div class="d-flex gap-2">
-                        <a href="@Url.Action("Edit", "Events", new { id = item.EventID })" class="btn btn-warning" style="margin-right: 10px;">Редактирай</a>
-                        <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" class="btn btn-danger" style="margin-right: 10px;">Изтрий</a>
-                        @if (item.EventDate < DateTime.Now){
-                            <a href="@Url.Action("Rate", "Events", new { id = item.EventID })" class="btn btn-success">Оценете</a>
-                        }
-                    </div>
                 </td>
             </tr>
         }
