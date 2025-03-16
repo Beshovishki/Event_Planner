@@ -25,9 +25,10 @@
                 <td>
                     <div class="d-flex gap-2">
                         <a href="@Url.Action("Edit", "Guests", new { id = guest.GuestID })" class="btn btn-warning">Редактирай</a>
-                        <form href="@Url.Action("Invitation", "Guests", new { id = guest.GuestID })" class="btn btn-primary">
-                            Изпрати покана
-                        </form>
+                        <a href="@Url.Action("Invitation", "Guests", new { id = guest.GuestID })" class="btn btn-primary">Изпрати покана</a>
+                        @* <form asp-action="Invitation" method="post" asp-route-id="@guest.GuestID" class="d-inline">
+                            <button type="submit" class="btn btn-primary">Изпрати покана</button>
+                        </form> *@
                         <form asp-action="ConfirmAttendance" method="post" asp-route-id="@guest.GuestID">
                             <button type="submit" class="btn btn-success">Потвърди</button>
                         </form>

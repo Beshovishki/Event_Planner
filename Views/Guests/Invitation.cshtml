@@ -1,14 +1,18 @@
-﻿@model Guest
+﻿@model EventPlanner.Models.Guest
 
-<form asp-action="Invitation" method="post" asp-route-id="@Model.GuestID">
+@{
+    ViewData["Title"] = "Поканете гост";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Изберете събитие за поканата:</h3>
+<form method="post">
     <div class="form-group">
-        <label for="EventID">Изберете събитие</label>
-        <select asp-for="EventID" class="form-control">
+        <label for="EventID">Събитие</label>
+        <select asp-for="EventID" class="form-control" asp-items="@(ViewData["Events"] as IEnumerable<SelectListItem>)">
+
             <option value="">Изберете събитие</option>
-            @foreach (var item in ViewData["Events"] as SelectList)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
         </select>
     </div>
 

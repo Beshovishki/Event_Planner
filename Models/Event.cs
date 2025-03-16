@@ -31,5 +31,8 @@ namespace EventPlanner.Models
         public ICollection<Rating> Ratings { get; set; } = new HashSet<Rating>();
 
         public bool IsArchived { get; set; } = false; // По подразбиране събитията не са архивирани
+
+        [NotMapped]
+        public int GuestCount { get; set; }
     }
 }

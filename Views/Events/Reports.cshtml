@@ -14,7 +14,10 @@
     <input type="text" id="location" name="location" value="@Context.Request.Query["location"]" />
 
     <button type="submit">Филтрирай</button>
+    <button type="button" id="refreshButton">Обнови</button>
 </form>
+
+
 
 <table class="table">
     <thead>
@@ -44,7 +47,14 @@
                         @item.EventPlace
                     </div>
                 </td>
-                <td>@item.Guests.Count</td>
+                <td>
+                    @if (@item.GuestCount > 0){
+                        <span>@item.GuestCount</span>
+                    }else{
+                        <span>
+                            -
+                        </span>
+                    }</td>
                 <td>
                     @if (@item.EventTasks.Count(t => t.IsCompleted) > 0)
                     {
@@ -53,6 +63,7 @@
                     else
                     {
                         <span>
+                            -
                         </span>
                     }
 
@@ -87,21 +98,10 @@
 </table>
 <script>
     function toggleText(button, eventId) {
-        // var fullDescription = document.getElementById("full-description-" + eventId);
-        // var description = document.getElementById("description-" + eventId);
-        // var fullEventName = document.getElementById("full-eventName-" + eventId);
-        // var eventName = document.getElementById("eventName-" + eventId);
         var fullEventPlace = document.getElementById("full-eventPlace-" + eventId);
         var eventPlace = document.getElementById("eventPlace-" + eventId);
 
         // Превключваме видимостта на пълният текст за всички
-
-        // var isHidden = fullDescription.style.display === "none";
-        // description.style.display = isHidden ? "none" : "block";
-        // fullDescription.style.display = isHidden ? "block" : "none";
-        // fullEventName.style.display === "none";
-        // eventName.style.display = isHidden ? "none" : "block";
-        // fullEventName.style.display = isHidden ? "block" : "none";
         var isHidden = fullEventPlace.style.display === "none";
         eventPlace.style.display = isHidden ? "none" : "block";
         fullEventPlace.style.display = isHidden ? "block" : "none";
@@ -109,5 +109,12 @@
         button.innerText = isHidden ? "Затвори" : "Преглед";
 
     }
+    document.getElementById("refreshButton").addEventListener("click", function() {
+        // Изчиства всички параметри от URL
+        var url = '@Url.Action("Reports", "Events")';
+
+        // Пренасочва към Reports без филтри
+        window.location.href = url;
+    });
 </script>
 
