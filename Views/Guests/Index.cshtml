@@ -12,7 +12,7 @@
         <tr>
             <th>Име на гост</th>
             <th>Email</th>
-            <th>Статус</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -22,26 +22,6 @@
             <tr>
                 <td>@guest.GuestName</td>
                 <td>@guest.Email</td>
-                <td>
-                    @switch (guest.RSVPStatus)
-                    {
-                        case "NotInvited":
-                            <text>В очакване</text>
-                            break;
-                        case "Invited":
-                            <text>Поканен</text>
-                            break;
-                        case "Confirmed":
-                            <text>Потвърдил</text>
-                        break;
-                        case "Declined":
-                            <text>Отказал</text>
-                            break;
-                        default:
-                            <text>@guest.RSVPStatus</text>
-                        break;
-                }
-                </td>
                 <td>
                     <div class="d-flex gap-2">
                         <a href="@Url.Action("Edit", "Guests", new { id = guest.GuestID })" class="btn btn-warning">Редактирай</a>

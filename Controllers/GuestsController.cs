@@ -40,7 +40,7 @@ namespace EventPlanner.Controllers.GuestController
         [HttpPost]
         [ValidateAntiForgeryToken]
        
-        public async Task<IActionResult> Create([Bind("GuestName, Email, RSVPStatus, EventID")] Guest guest)
+        public async Task<IActionResult> Create([Bind("GuestName, Email, EventID")] Guest guest)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace EventPlanner.Controllers.GuestController
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Edit(int id, [Bind("GuestID,GuestName,Email,RSVPStatus")] Guest guest)
+        public async Task<IActionResult> Edit(int id, [Bind("GuestID,GuestName,Email")] Guest guest)
         {
             if (id != guest.GuestID)
             {
@@ -226,21 +226,6 @@ namespace EventPlanner.Controllers.GuestController
                 return NotFound();  // Ако гостът не е намерен, връща 404
             }
 
-            guest.RSVPStatus = "Accepted";  // Може да е "Declined" или "Pending"
-            switch (guest.RSVPStatus)
-            {
-                case "Accepted":
-                    guest.RSVPStatus = "Потвърдил";
-                    break;
-                case "Declined":
-                    guest.RSVPStatus = "Отказл";
-                    break;
-                case "Pending":
-                    guest.RSVPStatus = "В очакване";
-                    break;
-                default:
-                    break;
-            }
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Guests");
