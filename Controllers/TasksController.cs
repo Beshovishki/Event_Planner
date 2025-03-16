@@ -1,4 +1,5 @@
-﻿using EventPlanner.Models;
+﻿using System.Threading.Tasks;
+using EventPlanner.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,14 @@ namespace EventPlanner.Controllers.TaskController
         {
             if (ModelState.IsValid)
             {
+                if (eventTask.TaskStatus == "Completed")
+                {
+                    eventTask.IsCompleted = true;
+                }
+                else
+                {
+                    eventTask.IsCompleted = false;
+                }
                 _context.Add(eventTask);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -77,6 +86,15 @@ namespace EventPlanner.Controllers.TaskController
             {
                 try
                 {
+                    // Ако статусът е "Completed", задаваме IsCompleted = true
+                    if (eventTask.TaskStatus == "Completed")
+                    {
+                        eventTask.IsCompleted = true;
+                    }
+                    else
+                    {
+                        eventTask.IsCompleted = false;
+                    }
                     _context.Update(eventTask);
                     await _context.SaveChangesAsync();
                 }

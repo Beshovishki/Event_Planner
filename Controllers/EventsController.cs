@@ -226,6 +226,32 @@ namespace EventPlanner.Controllers
 
             return View(rating);  // Връща формата за повторно попълване, ако има грешки
         }
+        public async Task<IActionResult> Reports(DateTime? startDate, DateTime? endDate, string? location)
+        {
+            var query = _context.Events
+                .Include(e => e.Guests)
+                .Include(e => e.EventTasks)
+                .Include(e => e.Ratings)
+                .AsQueryable();
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(e => e.EventDate >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(e => e.EventDate <= endDate.Value);
+            }
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                query = query.Where(e => e.EventPlace.Contains(location));
+            }
+
+            var events = await query.ToListAsync();
+            return View(events);
+        }
         public int GetVoteCount(int eventId)
         {
             return _context.Ratings.Count(r => r.EventID == eventId);

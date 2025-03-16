@@ -1,0 +1,113 @@
+﻿@model IEnumerable<EventPlanner.Models.Event>
+
+<h1>Отчети за Събития</h1>
+
+<!-- Форма за филтриране -->
+<form method="get">
+    <label for="startDate">От дата:</label>
+    <input type="date" id="startDate" name="startDate" value="@Context.Request.Query["startDate"]" />
+
+    <label for="endDate">До дата:</label>
+    <input type="date" id="endDate" name="endDate" value="@Context.Request.Query["endDate"]" />
+
+    <label for="location">Място:</label>
+    <input type="text" id="location" name="location" value="@Context.Request.Query["location"]" />
+
+    <button type="submit">Филтрирай</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width: 150px">Дата и час</th>
+            <th>Място</th>
+            <th>Присъствали гости</th>
+            <th>Завършени задачи</th>
+            <th style="width: 150px">Гласове/Оценка</th>
+            <th style="width: 100px"></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EventDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>
+                    @{
+                        var shortEventPlace = item.EventPlace.Length > 20 ? item.EventPlace.Substring(0, 20) + "..." : item.EventPlace;
+                    }
+                    <div id="eventPlace-@item.EventID" class="eventPlace-short">
+                        @shortEventPlace
+                    </div>
+                    <div id="full-eventPlace-@item.EventID" class="eventPlace-full" style="display:none;">
+                        @item.EventPlace
+                    </div>
+                </td>
+                <td>@item.Guests.Count</td>
+                <td>
+                    @if (@item.EventTasks.Count(t => t.IsCompleted) > 0)
+                    {
+                        <span>@item.EventTasks.Count(t => t.IsCompleted)</span>
+                    }
+                    else
+                    {
+                        <span>
+                        </span>
+                    }
+
+                </td>
+                <td class="assessment">
+                    @if (item.Ratings != null && item.Ratings.Any())
+                    {
+                        <i class="fas fa-users"></i> <span class="badge bg-primary">@item.Ratings.Count() </span>
+                        var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
+                        <span>@avgRating</span>
+
+                        @* <button class="btn btn-outline-secondary btn-sm"> *@
+                        @*     <i class="fas fa-comments"></i> <span class="badge bg-info">Коментари</span> *@
+                        @* </button> *@
+                    }
+                    else
+                    {
+                        <span>Без оценка</span>
+                    }
+                </td>
+                <td>
+                    @if (item.EventPlace.Length > 20)
+                    {
+                        <button class="btn btn-primary" onclick="toggleText(this, @item.EventID)">Преглед</button>
+                    }
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function toggleText(button, eventId) {
+        // var fullDescription = document.getElementById("full-description-" + eventId);
+        // var description = document.getElementById("description-" + eventId);
+        // var fullEventName = document.getElementById("full-eventName-" + eventId);
+        // var eventName = document.getElementById("eventName-" + eventId);
+        var fullEventPlace = document.getElementById("full-eventPlace-" + eventId);
+        var eventPlace = document.getElementById("eventPlace-" + eventId);
+
+        // Превключваме видимостта на пълният текст за всички
+
+        // var isHidden = fullDescription.style.display === "none";
+        // description.style.display = isHidden ? "none" : "block";
+        // fullDescription.style.display = isHidden ? "block" : "none";
+        // fullEventName.style.display === "none";
+        // eventName.style.display = isHidden ? "none" : "block";
+        // fullEventName.style.display = isHidden ? "block" : "none";
+        var isHidden = fullEventPlace.style.display === "none";
+        eventPlace.style.display = isHidden ? "none" : "block";
+        fullEventPlace.style.display = isHidden ? "block" : "none";
+
+        button.innerText = isHidden ? "Затвори" : "Преглед";
+
+    }
+</script>
+
