@@ -19,6 +19,7 @@ namespace EventPlanner.Models
         public string EventPlace { get; set; } = string.Empty;
         [Required(ErrorMessage = "Моля, въведете описание събитието.")]
         public string Description { get; set; } = string.Empty;
+        public ICollection<EventGuest> EventGuests { get; set; } = new List<EventGuest>();
 
         // Навигационно свойство за гостите (едно към много)
         public ICollection<Guest> Guests { get; set; } = new HashSet<Guest>();

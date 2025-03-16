@@ -14,6 +14,7 @@ namespace EventPlanner.Models
         public DbSet<Guest> Guests { get; set; }
         public DbSet<EventTask> EventTasks { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<EventGuest> EventGuests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,19 @@ namespace EventPlanner.Models
                 .HasOne(r => r.Event)
                 .WithMany(e => e.Ratings)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EventGuest>()
+                .HasOne(eg => eg.Guest)
+                .WithMany(g => g.EventGuests)
+                .HasForeignKey(eg => eg.GuestID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EventGuest>()
+                .HasOne(eg => eg.Event)
+                .WithMany(e => e.EventGuests)
+                .HasForeignKey(eg => eg.EventID)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

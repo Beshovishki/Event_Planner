@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "D:\\Downloads\\GitHub\\EventPlanner\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\models\\guest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:models\\guest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\models\\eventguest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:models\\eventguest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\models\\guest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:models\\guest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\controllers\\guestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\models\\eventtask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -270,15 +274,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 59,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EventGuest.cs",
+              "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\EventGuest.cs",
+              "RelativeDocumentMoniker": "Models\\EventGuest.cs",
+              "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\EventGuest.cs",
+              "RelativeToolTip": "Models\\EventGuest.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAcwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T13:14:13.964Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Reports.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Reports.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Reports.cshtml",
@@ -290,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Archive.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Archive.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Archive.cshtml",
@@ -302,7 +319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "bootstrap-reboot.rtl.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
@@ -314,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "bootstrap.rtl.css.map",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
@@ -326,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "bootstrap.css.map",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
@@ -338,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "bootstrap.rtl.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
@@ -350,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "bootstrap-grid.css.map",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
@@ -362,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "bootstrap.min.css.map",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
@@ -374,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "bootstrap.min.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
@@ -386,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "bootstrap-reboot.min.css.map",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
@@ -398,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "bootstrap-reboot.min.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
@@ -410,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "bootstrap.bundle.js",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
@@ -422,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Rate.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Rate.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Rate.cshtml",
@@ -434,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "_ValidationScriptsPartial.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
@@ -446,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "Error.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Shared\\Error.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\Error.cshtml",
@@ -458,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Guests\\Delete.cshtml",
@@ -470,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Invitation.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Invitation.cshtml",
               "RelativeDocumentMoniker": "Views\\Guests\\Invitation.cshtml",
@@ -483,7 +500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Guests\\Edit.cshtml",
@@ -496,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Guests\\Index.cshtml",
@@ -509,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Guests\\Create.cshtml",
@@ -522,7 +539,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "Event_Planner.gitignore",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Event_Planner.gitignore",
               "RelativeDocumentMoniker": "Event_Planner.gitignore",
@@ -534,7 +551,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Tasks\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Tasks\\Delete.cshtml",
@@ -546,7 +563,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Tasks\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Tasks\\Edit.cshtml",
@@ -558,7 +575,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Tasks\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Tasks\\Create.cshtml",
@@ -570,7 +587,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Tasks\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Tasks\\Index.cshtml",
@@ -582,7 +599,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "TasksController.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Controllers\\TasksController.cs",
               "RelativeDocumentMoniker": "Controllers\\TasksController.cs",
@@ -595,7 +612,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "GuestsController.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Controllers\\GuestsController.cs",
               "RelativeDocumentMoniker": "Controllers\\GuestsController.cs",
@@ -608,7 +625,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Delete.cshtml",
@@ -620,7 +637,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Edit.cshtml",
@@ -632,7 +649,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "20250213100207_InitialCreate.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Migrations\\20250213100207_InitialCreate.cs",
               "RelativeDocumentMoniker": "Migrations\\20250213100207_InitialCreate.cs",
@@ -644,7 +661,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "ApplicationDbContextModelSnapshot.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Migrations\\ApplicationDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
@@ -656,7 +673,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -668,7 +685,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "_Layout.cshtml.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Shared\\_Layout.cshtml.css",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml.css",
@@ -680,7 +697,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "jquery.validate.unobtrusive.js",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
@@ -692,7 +709,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "jquery.validate.js",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
@@ -704,7 +721,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "additional-methods.js",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
@@ -716,7 +733,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "jquery.js",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\jquery\\dist\\jquery.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\jquery\\dist\\jquery.js",
@@ -728,7 +745,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "bootstrap.js",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
@@ -740,7 +757,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "bootstrap-utilities.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
@@ -752,7 +769,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "bootstrap-reboot.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
@@ -764,7 +781,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "bootstrap-grid.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
@@ -776,7 +793,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "bootstrap.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
@@ -788,7 +805,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "LICENSE",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\lib\\bootstrap\\LICENSE",
               "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\LICENSE",
@@ -800,7 +817,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "site.js",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\js\\site.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\site.js",
@@ -812,7 +829,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "site.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
@@ -824,7 +841,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "favicon.ico - Icon [32x32, 32 bit, BMP]",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\favicon.ico",
               "RelativeDocumentMoniker": "wwwroot\\favicon.ico",
@@ -836,7 +853,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "EventsController.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Controllers\\EventsController.cs",
               "RelativeDocumentMoniker": "Controllers\\EventsController.cs",
@@ -848,7 +865,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Views\\_ViewImports.cshtml",
@@ -860,7 +877,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "Views\\_ViewStart.cshtml",
@@ -872,7 +889,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -884,7 +901,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "EventPlanner.deps.json",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\bin\\Debug\\net8.0\\EventPlanner.deps.json",
               "RelativeDocumentMoniker": "bin\\Debug\\net8.0\\EventPlanner.deps.json",
@@ -896,7 +913,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Create.cshtml",
@@ -908,7 +925,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Index.cshtml",
@@ -920,7 +937,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -932,7 +949,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\appsettings.Development.json",
               "RelativeDocumentMoniker": "appsettings.Development.json",
@@ -950,14 +967,14 @@
               "RelativeDocumentMoniker": "Models\\ApplicationDbContext.cs",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\ApplicationDbContext.cs",
               "RelativeToolTip": "Models\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAswB4AAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAABoAAAAAAAAAAAAIwCsAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-10T17:59:01.65Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Rating.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\Rating.cs",
               "RelativeDocumentMoniker": "Models\\Rating.cs",
@@ -969,7 +986,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "EventTask.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\EventTask.cs",
               "RelativeDocumentMoniker": "Models\\EventTask.cs",
@@ -982,33 +999,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Guest.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\Guest.cs",
               "RelativeDocumentMoniker": "Models\\Guest.cs",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\Guest.cs",
               "RelativeToolTip": "Models\\Guest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAYwAwAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-10T17:57:00.743Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 3,
               "Title": "Event.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\Event.cs",
               "RelativeDocumentMoniker": "Models\\Event.cs",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\Event.cs",
               "RelativeToolTip": "Models\\Event.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAADwvx4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBUAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-10T17:56:04.312Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "Models\\ErrorViewModel.cs",
@@ -1020,7 +1037,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -1033,7 +1050,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": ".dockerignore",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\.dockerignore",
               "RelativeDocumentMoniker": ".dockerignore",
@@ -1045,7 +1062,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 64,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guest\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Guest\\Index.cshtml",
@@ -1057,7 +1074,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 65,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guest\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Guest\\Create.cshtml",

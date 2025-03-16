@@ -10,6 +10,7 @@ namespace EventPlanner.Models
         public string GuestName { get; set; } = string.Empty;
         [Required(ErrorMessage = "Моля, въведете Email на госта.")]
         public string Email { get; set; } = string.Empty;
+        public ICollection<EventGuest> EventGuests { get; set; } = new List<EventGuest>();
 
         // Връзка към събитие (много към едно)
 
