@@ -37,27 +37,6 @@ namespace EventPlanner.Controllers
 
                 return View(events);
             }
-
-
-            //// Ако е избрано да се показват архивираните събития
-            //if (showArchived)
-            //{
-            //    var archivedEvents = await _context.Events
-            //        .Where(e => e.EventDate.AddDays(5) < DateTime.Now) // Примерна логика: събития с дата в миналото
-            //        .Include(e => e.Ratings) // Зарежда всички оценки за всяко събитие
-            //        .ToListAsync();
-
-            //    return View(archivedEvents);
-            //}
-            //else
-            //{
-            //    var activeEvents = await _context.Events
-            //        .Where(e => e.EventDate >= DateTime.Now || e.EventDate.AddDays(5) >= DateTime.Now) // Включва бъдещи събития и събития до 5 дни назад
-            //        .Include(e => e.Ratings) // Зарежда всички оценки за всяко събитие
-            //        .ToListAsync();
-
-            //    return View(activeEvents);
-            //}
         }
         public async Task ArchiveEvents()
         {
@@ -258,6 +237,15 @@ namespace EventPlanner.Controllers
 
             return View(events);
         }
+        public IActionResult GetUpcomingEventCount()
+        {
+            var count = _context.Events
+                .Where(e => e.EventDate.Date >= DateTime.Now.Date && e.EventDate.Date <= DateTime.Now.Date.AddDays(5))
+                .Count();
+
+            return Json(new { count });
+        }
+
         public int GetVoteCount(int eventId)
         {
             return _context.Ratings.Count(r => r.EventID == eventId);

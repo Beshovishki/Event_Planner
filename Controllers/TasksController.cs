@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventPlanner.Controllers.TaskController
 {
-
     public class TasksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -145,13 +144,9 @@ namespace EventPlanner.Controllers.TaskController
 
             return RedirectToAction(nameof(Index));
         }
-        
-
-
         private bool EventTaskExists(int id)
         {
             return _context.EventTasks.Any(e => e.EventTaskID == id);
         }
-
     }
 }

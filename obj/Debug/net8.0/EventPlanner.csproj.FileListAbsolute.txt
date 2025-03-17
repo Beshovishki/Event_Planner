@@ -495,3 +495,4 @@ D:\Downloads\GitHub\Event_Planner-dev\obj\Debug\net8.0\EventPlanner.pdb
 D:\Downloads\GitHub\Event_Planner-dev\obj\Debug\net8.0\EventPlanner.genruntimeconfig.cache
 D:\Downloads\GitHub\Event_Planner-dev\obj\Debug\net8.0\ref\EventPlanner.dll
 D:\Downloads\GitHub\Event_Planner-dev\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\Downloads\GitHub\EventPlanner\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

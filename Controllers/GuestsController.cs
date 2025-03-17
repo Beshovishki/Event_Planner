@@ -11,7 +11,6 @@ using System.Diagnostics;
 
 namespace EventPlanner.Controllers.GuestController
 {
-    
     public class GuestsController : Controller
     {
         private readonly ApplicationDbContext _context;

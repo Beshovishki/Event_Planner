@@ -1,5 +1,14 @@
 ﻿@model IEnumerable<EventPlanner.Models.Event>
 
+<div id="upcomingEventsContainer" style="display: none;">
+    <button id="showUpcomingEvents" class="btn btn-warning">
+        ⚠ Имате ( <span id="eventCount"></span> ) предстоящи събития!
+    </button>
+    <div id="upcomingEventsList" style="display: none;">
+        @await Html.PartialAsync("_UpcomingEvents", Model.Where(e => e.EventDate.Date >= DateTime.Now.Date && e.EventDate <= DateTime.Now.AddDays(6)).OrderBy(e => e.EventDate).Take(5).ToList())
+    </div>
+</div>
+
 @{
     ViewData["Title"] = "Събития";
 }
@@ -124,4 +133,19 @@
         button.innerText = isHidden ? "Затвори" : "Преглед";
 
     }
+        document.addEventListener("DOMContentLoaded", function () {
+        fetch("/Events/GetUpcomingEventCount")
+            .then(response => response.json())
+            .then(data => {
+                if (data.count > 0) {
+                    document.getElementById("eventCount").textContent = data.count;
+                    document.getElementById("upcomingEventsContainer").style.display = "block";
+                }
+            });
+
+        document.getElementById("showUpcomingEvents").addEventListener("click", function () {
+            var eventList = document.getElementById("upcomingEventsList");
+            eventList.style.display = (eventList.style.display === "none") ? "block" : "none";
+        });
+    });
 </script>
