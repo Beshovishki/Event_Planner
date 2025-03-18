@@ -2,9 +2,17 @@
 
 @foreach (var eventGuest in Model)
 {
+    string status = eventGuest.Status.ToString() switch
+    {
+        "Confirmed" => "Потвърдил",
+        "Declined" => "Отказал",
+        "Invited" => "Поканен",
+        _ => "В очакване"
+    };
+        
         <div style="margin-top: 20px">
             <h6><strong>Събитие:</strong> @eventGuest.Event.EventName  <strong>Дата:</strong> @eventGuest.Event.EventDate.ToString("dd.MM.yyyy - HH:mmч.")</h6>
-            <div>Сатус: <strong>@eventGuest.Status</strong></div>
+            <div>Сатус: <strong>@status</strong></div>
             <div class="d-flex gap-2">
                 @if (eventGuest.Status == InvitationStatus.Invited) // Ако гостът е поканен, но не е потвърдил
                 {

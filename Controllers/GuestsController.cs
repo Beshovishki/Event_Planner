@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace EventPlanner.Controllers.GuestController
 {
@@ -185,6 +186,9 @@ namespace EventPlanner.Controllers.GuestController
 
             // Записваме промените в базата данни
             await _context.SaveChangesAsync();
+            await SendInvitation(guestToInvite.GuestID);
+
+            TempData["Success"] = "Поканата е изпратена успешно!";
 
             return RedirectToAction(nameof(Index));  // Пренасочваме към списъка с гости
         }
@@ -242,6 +246,69 @@ namespace EventPlanner.Controllers.GuestController
             // Пренасочваме към изгледа за събитие
             return RedirectToAction("Index", "Guests");
         }
+        [HttpPost]
+        public async Task<IActionResult> SendInvitation(int id)
+        {
+            var guest = await _context.Guests
+                .Include(g => g.EventGuests) // Зареждаме връзката към събитията
+                .ThenInclude(eg => eg.Event) // Взимаме и информацията за самото събитие
+                .FirstOrDefaultAsync(g => g.GuestID == id);
+
+            if (guest == null || guest.EventGuests == null || !guest.EventGuests.Any())
+            {
+                return NotFound("Гостът не е намерен или няма покани за събития.");
+            }
+
+            var eventDetails = guest.EventGuests.FirstOrDefault()?.Event;
+            if (eventDetails == null)
+            {
+                return BadRequest("Гостът няма свързано събитие.");
+            }
+
+            // Създаваме имейл
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress("Event Organizer", _configuration["EmailSettings:SMTPUsername"]));
+            emailMessage.To.Add(new MailboxAddress(guest.GuestName, guest.Email));
+            emailMessage.Subject = $"Покана за събитието: {eventDetails.EventName}";
+
+            var bodyBuilder = new BodyBuilder
+            {
+                TextBody = $"Здравейте {guest.GuestName},\n\n" +
+                           $"Поканени сте на събитието: {eventDetails.EventName}.\n\n" +
+                           $"Дата: {eventDetails.EventDate.ToString("dd/MM/yyyy - HH.mmч.")}\n" +
+                           $"Място: {eventDetails.EventPlace}\n\n" +
+                           $"Поздрави,\nЕкипът на Event Planner"
+            };
+            emailMessage.Body = bodyBuilder.ToMessageBody();
+
+            // Конфигурация за SMTP
+            var smtpServer = _configuration["EmailSettings:SMTPServer"];
+            var smtpPort = int.Parse(_configuration["EmailSettings:SMTPPort"]);
+            var smtpUsername = _configuration["EmailSettings:SMTPUsername"];
+            var smtpPassword = _configuration["EmailSettings:SMTPPassword"];
+
+            try
+            {
+                using (var smtpClient = new SmtpClient())
+                {
+                    await smtpClient.ConnectAsync(smtpServer, smtpPort, MailKit.Security.SecureSocketOptions.StartTls);
+                    await smtpClient.AuthenticateAsync(smtpUsername, smtpPassword);
+                    await smtpClient.SendAsync(emailMessage);
+                    await smtpClient.DisconnectAsync(true);
+                }
+
+                Console.WriteLine($"Поканата за {guest.GuestName} е изпратена успешно!");
+                TempData["SuccessMessage"] = $"Поканата беше успешно изпратена на {guest.Email}";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Грешка при изпращане на поканата: {ex.Message}");
+                TempData["ErrorMessage"] = "Възникна грешка при изпращането на поканата.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool GuestExists(int id)
         {
             return _context.Guests.Any(e => e.GuestID == id);
