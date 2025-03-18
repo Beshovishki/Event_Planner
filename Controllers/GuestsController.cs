@@ -26,7 +26,7 @@ namespace EventPlanner.Controllers.GuestController
         
         public async Task<IActionResult> Index()
         {
-            var guests = await _context.Guests.ToListAsync();
+            var guests = await _context.Guests.Include(g => g.EventGuests).ToListAsync();
             return View(guests);
         }
         // GET: Guests/Create
@@ -189,19 +189,57 @@ namespace EventPlanner.Controllers.GuestController
             return RedirectToAction(nameof(Index));  // Пренасочваме към списъка с гости
         }
 
+        public async Task<IActionResult> EventInvitations(int id) // или int guestId
+        {
+            // Логика за зареждане на събитията, за които е поканен гостът
+            var guestInvitations = await _context.EventGuests
+                .Where(eg => eg.GuestID == id)
+                .Include(eg => eg.Event)
+                .ToListAsync();
+
+            return View(guestInvitations);
+        }
         // POST: Guests/SendInvitation/5
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmAttendance(int id)
+        public async Task<IActionResult> ConfirmInvitation(int eventId, int guestId)
         {
-            var guest = await _context.Guests.FindAsync(id);
-            if (guest == null)
+            // Намираме връзката между събитието и госта
+            var eventGuest = await _context.EventGuests
+                .FirstOrDefaultAsync(eg => eg.EventID == eventId && eg.GuestID == guestId);
+
+            if (eventGuest == null)
             {
-                return NotFound();  // Ако гостът не е намерен, връща 404
+                return NotFound();
             }
 
+            // Променяме статуса на госта на "Приел поканата"
+            eventGuest.Status = InvitationStatus.Confirmed;
+
+            // Записваме промените в базата данни
             await _context.SaveChangesAsync();
 
+            // Пренасочваме към изгледа за събитие
+            return RedirectToAction("Index", "Guests");
+        }
+        public async Task<IActionResult> DeclineInvitation(int eventId, int guestId)
+        {
+            // Намираме връзката между събитието и госта
+            var eventGuest = await _context.EventGuests
+                .FirstOrDefaultAsync(eg => eg.EventID == eventId && eg.GuestID == guestId);
+
+            if (eventGuest == null)
+            {
+                return NotFound();
+            }
+
+            // Изтриваме записа за поканата
+            _context.EventGuests.Remove(eventGuest);
+
+            // Записваме промените в базата данни
+            await _context.SaveChangesAsync();
+
+            // Пренасочваме към изгледа за събитие
             return RedirectToAction("Index", "Guests");
         }
         private bool GuestExists(int id)

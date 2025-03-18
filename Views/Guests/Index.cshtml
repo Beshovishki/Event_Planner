@@ -26,10 +26,18 @@
                     <div class="d-flex gap-2">
                         <a href="@Url.Action("Edit", "Guests", new { id = guest.GuestID })" class="btn btn-warning">Редактирай</a>
                         <a href="@Url.Action("Invitation", "Guests", new { id = guest.GuestID })" class="btn btn-primary">Изпрати покана</a>
-                       
-                        <form asp-action="ConfirmAttendance" method="post" asp-route-id="@guest.GuestID">
+                        @if (guest.EventGuests.Any(eg => eg.Status == InvitationStatus.Invited || eg.Status == InvitationStatus.Confirmed))
+                        {
+                            <a href="@Url.Action("EventInvitations", "Guests", new { id = guest.GuestID })" class="btn btn-success">Потвърди/Откажи</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn btn-success disabled" aria-disabled="true" style="padding: 6px 28px 6px 28px">Няма събития</a>
+                        }
+                        
+                        @* <form asp-action="ConfirmAttendance" method="post" asp-route-id="@guest.GuestID">
                             <button type="submit" class="btn btn-success">Потвърди</button>
-                        </form>
+                        </form> *@
                         <form asp-action="Delete" asp-route-id="@guest.GuestID" method="post" style="display:inline-block;">
                             <a href="@Url.Action("Delete", "Guests", new { id = guest.GuestID })" class="btn btn-danger">Изтрий</a>
                         </form>

@@ -232,7 +232,8 @@ namespace EventPlanner.Controllers
             // Извличаме броя на гостите за всяко събитие
             foreach (var eventItem in events)
             {
-                eventItem.GuestCount = _context.EventGuests.Count(eg => eg.EventID == eventItem.EventID);
+                
+                eventItem.GuestCount = _context.EventGuests.Count(eg => eg.EventID == eventItem.EventID && eg.Status == InvitationStatus.Confirmed);
             }
 
             return View(events);
