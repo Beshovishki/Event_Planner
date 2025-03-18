@@ -13,6 +13,7 @@
     ViewData["Title"] = "Събития";
 }
 
+
 <h1>@ViewData["Title"]</h1>
 
 <p>
@@ -31,6 +32,7 @@
             <th style="width: 150px">Гласове/Оценка</th>
             <th style="width: 100px"></th>
             <th></th>
+            <th style="width: 150px"></th>
         </tr>
     </thead>
     <tbody>
@@ -74,23 +76,22 @@
                     
                 </td>
                 <td class="assessment">
+                    <div class="d-flex gap-2">
                     @if (item.Ratings != null && item.Ratings.Any())
                     {
-                        <i class="fas fa-users"></i> <span class="badge bg-primary">@item.Ratings.Count() </span>
                         var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
-                        <span>@avgRating</span>
+                            <span>@item.Ratings.Count() / @avgRating</span>
+                       
                         
-                        @* <button class="btn btn-outline-secondary btn-sm"> *@
-                        @*     <i class="fas fa-comments"></i> <span class="badge bg-info">Коментари</span> *@
-                        @* </button> *@
                     }
                     else
                     {
                         <span>Без оценка</span>
                     }
+                    </div>
                 </td>
                 <td>
-                    @if (item.Description.Length > 20 || item.EventName.Length > 20 || item.EventPlace.Length > 20)
+                    @if (item.Description.Length > 20 || item.EventName.Length > 20)
                     {
                         <button class="btn btn-primary" onclick="toggleText(this, @item.EventID)">Преглед</button>
                     }
@@ -104,6 +105,33 @@
                             <a href="@Url.Action("Rate", "Events", new { id = item.EventID })" class="btn btn-success">Оценете</a>
                         }
                     </div>
+                </td>
+                <td>
+                    @if (item.Ratings.Any(r => !string.IsNullOrEmpty(r.Comments)))
+                    {
+                        <button class="btn btn-info" type="button" style="margin-left: 46px" data-bs-toggle="modal" data-bs-target="#commentsModal-@item.EventID">
+                            Коментари
+                        </button>
+
+                        <div class="modal fade" id="commentsModal-@item.EventID" tabindex="-1" aria-labelledby="commentsModalLabel-@item.EventID" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Коментари за събитието</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group">
+                                            @foreach (var rating in item.Ratings.Where(r => !string.IsNullOrEmpty(r.Comments)))
+                                            {
+                                                <li class="list-group-item">@rating.Comments</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </td>
             </tr>
         }

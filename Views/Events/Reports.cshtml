@@ -69,9 +69,8 @@
                 <td class="assessment">
                     @if (item.Ratings != null && item.Ratings.Any())
                     {
-                        <i class="fas fa-users"></i> <span class="badge bg-primary">@item.Ratings.Count() </span>
                         var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
-                        <span>@avgRating</span>
+                        <span>@item.Ratings.Count() / @avgRating</span>
 
                         @* <button class="btn btn-outline-secondary btn-sm"> *@
                         @*     <i class="fas fa-comments"></i> <span class="badge bg-info">Коментари</span> *@

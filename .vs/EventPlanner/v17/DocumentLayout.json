@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\Downloads\\GitHub\\EventPlanner\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\events\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\events\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\events\\archive.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\events\\archive.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\guests\\eventinvitations.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\guests\\eventinvitations.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\guests\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\guests\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -15,16 +31,8 @@
       "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:models\\eventguest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\guests\\eventinvitations.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\guests\\eventinvitations.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\events\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\events\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\guests\\invitation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -37,14 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\events\\archive.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\events\\archive.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|solutionrelative:views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D8D689E0-C2A3-466D-AA2A-59965A971ADD}|EventPlanner.csproj|d:\\downloads\\github\\eventplanner\\views\\events\\_upcomingevents.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -278,7 +278,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -288,9 +288,10 @@
               "RelativeDocumentMoniker": "Views\\Guests\\EventInvitations.cshtml",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\EventInvitations.cshtml",
               "RelativeToolTip": "Views\\Guests\\EventInvitations.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-17T10:11:46.471Z"
+              "WhenOpened": "2025-03-17T10:11:46.471Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -306,20 +307,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Guests\\Index.cshtml",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Index.cshtml",
               "RelativeToolTip": "Views\\Guests\\Index.cshtml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABsAAACMAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAACoAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-16T14:15:14.135Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "EventGuest.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Models\\EventGuest.cs",
               "RelativeDocumentMoniker": "Models\\EventGuest.cs",
@@ -332,27 +333,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "Reports.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Reports.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Reports.cshtml",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Reports.cshtml",
               "RelativeToolTip": "Views\\Events\\Reports.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAACMAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAEYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-16T06:34:17.505Z"
+              "WhenOpened": "2025-03-16T06:34:17.505Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "Archive.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Archive.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Archive.cshtml",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Archive.cshtml",
               "RelativeToolTip": "Views\\Events\\Archive.cshtml",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAAEAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAcwD0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-12T10:35:09.652Z"
+              "WhenOpened": "2025-03-12T10:35:09.652Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -524,7 +527,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Invitation.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Guests\\Invitation.cshtml",
               "RelativeDocumentMoniker": "Views\\Guests\\Invitation.cshtml",
@@ -620,7 +623,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "GuestsController.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Controllers\\GuestsController.cs",
               "RelativeDocumentMoniker": "Controllers\\GuestsController.cs",
@@ -837,7 +840,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "site.css",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
@@ -861,7 +864,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "EventsController.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Controllers\\EventsController.cs",
               "RelativeDocumentMoniker": "Controllers\\EventsController.cs",
@@ -933,15 +936,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Events\\Index.cshtml",
               "ToolTip": "D:\\Downloads\\GitHub\\EventPlanner\\Views\\Events\\Index.cshtml",
               "RelativeToolTip": "Views\\Events\\Index.cshtml",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAHEAAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAADsAAAAAAAAAAAAcwFIAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-10T18:42:47.313Z"
+              "WhenOpened": "2025-02-10T18:42:47.313Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -1041,7 +1045,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Downloads\\GitHub\\EventPlanner\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
