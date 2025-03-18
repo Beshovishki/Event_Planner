@@ -24,6 +24,7 @@ namespace EventPlanner.Controllers
                 var archivedEvents = await _context.Events
                     .Where(e => e.IsArchived == true) // Филтрираме само архивираните събития
                     .Include(e => e.Ratings) // Зареждаме всички оценки за всяко събитие
+                    .OrderBy(e => e.EventDate)
                     .ToListAsync();
 
                 return View(archivedEvents);
@@ -33,6 +34,7 @@ namespace EventPlanner.Controllers
                 var events = await _context.Events
                     .Where(e => e.EventDate >= DateTime.Now || (e.EventDate.AddDays(5) >= DateTime.Now && e.IsArchived == false)) // Включва бъдещи събития и събития, които не са архивирани
                     .Include(e => e.Ratings) // Зареждаме всички оценки за всяко събитие
+                    .OrderBy(e => e.EventDate)
                     .ToListAsync();
 
                 return View(events);
@@ -57,6 +59,7 @@ namespace EventPlanner.Controllers
             var archivedEvents = await _context.Events
                 .Where(e => e.EventDate.AddDays(5) < DateTime.Now) // Събития, които са завършили преди повече от 5 дни
                 .Include(e => e.Ratings) // Зареждаме оценките
+                .OrderBy(e => e.EventDate)
                 .ToListAsync();
 
             return View(archivedEvents); // Връщаме към изгледа за архивираните събития
@@ -211,6 +214,7 @@ namespace EventPlanner.Controllers
                 .Include(e => e.Guests)
                 .Include(e => e.EventTasks)
                 .Include(e => e.Ratings)
+                .OrderBy(e => e.EventDate)
                 .AsQueryable();
 
             if (startDate.HasValue)
