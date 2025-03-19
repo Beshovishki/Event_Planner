@@ -7,10 +7,11 @@ using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static System.Net.Mime.MediaTypeNames;
+using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace EventPlanner.Controllers.GuestController
 {
-    
     public class GuestsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +27,9 @@ namespace EventPlanner.Controllers.GuestController
         
         public async Task<IActionResult> Index()
         {
-            var guests = await _context.Guests.ToListAsync();
+            var guests = await _context.Guests.Include(g => g.EventGuests)
+                .OrderBy(g => g.GuestName)
+                .ToListAsync();
             return View(guests);
         }
         // GET: Guests/Create
@@ -40,7 +43,7 @@ namespace EventPlanner.Controllers.GuestController
         [HttpPost]
         [ValidateAntiForgeryToken]
        
-        public async Task<IActionResult> Create([Bind("GuestName, Email, RSVPStatus, EventID")] Guest guest)
+        public async Task<IActionResult> Create([Bind("GuestName, Email, EventID")] Guest guest)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +54,7 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // GET: Guest/Edit/5
+        // GET: Guest/Edit/id
         
         public async Task<IActionResult> Edit(int? id)
         {
@@ -68,11 +71,11 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // POST: Guest/Edit/5
+        // POST: Guest/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Edit(int id, [Bind("GuestID,GuestName,Email,RSVPStatus")] Guest guest)
+        public async Task<IActionResult> Edit(int id, [Bind("GuestID,GuestName,Email")] Guest guest)
         {
             if (id != guest.GuestID)
             {
@@ -102,7 +105,7 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // GET: Guests/Delete/5
+        // GET: Guests/Delete/id
         
         public async Task<IActionResult> Delete(int? id)
         {
@@ -121,21 +124,25 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // POST: Guests/Delete/5
+        // POST: Guests/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var guest = await _context.Guests.FindAsync(id);
-            _context.Guests.Remove(guest);
-            await _context.SaveChangesAsync();
+            if (guest != null)
+            {
+                _context.Guests.Remove(guest);
+                await _context.SaveChangesAsync();
+                
+            }
             return RedirectToAction(nameof(Index));
         }
         // GET: Guests/Invitation/5
         public IActionResult Invitation(int id)
         {
-            // Вземете госта по ID
+            // Взимане госта по id
             var guest = _context.Guests.FirstOrDefault(g => g.GuestID == id);
 
             if (guest == null)
@@ -143,16 +150,19 @@ namespace EventPlanner.Controllers.GuestController
                 return NotFound();
             }
 
-            // Предаваме списъка със събития на изгледа
-            var events = _context.Events.ToList();  // Зареждате събитията
-            ViewData["Events"] = new SelectList(_context.Events, "EventID", "EventName");
-            return View(guest);  // Тук подавате госта, за да го имате в изгледа
+            // Взимане всички събития, за да могат да се изберат
+            var events = _context.Events
+                    .Where(e => !_context.EventGuests.Any(eg => eg.EventID == e.EventID && eg.GuestID == guest.GuestID))
+                    .ToList();
+            ViewData["Events"] = new SelectList(events, "EventID", "EventName");
+
+            return View(guest);  // Изпраща госта в изгледа
         }
 
-        // POST: Guests/Invitation/5
+        // POST: Guests/Invitation/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Invitation(int id, [Bind("EventID", "GuestID", "GuestName")] Guest guest)
+        public async Task<IActionResult> Invitation(int id, [Bind("EventID")] Guest guest)
         {
             var guestToInvite = await _context.Guests.FindAsync(id);
 
@@ -161,90 +171,152 @@ namespace EventPlanner.Controllers.GuestController
                 return NotFound();
             }
 
-            // Свързваме избраното събитие с госта
-            guestToInvite.EventID = guest.EventID;
+            // Проверка дали е избрано събитие
+            if (guest.EventID == 0)
+            {
+                ModelState.AddModelError("EventID", "Моля, изберете събитие.");
+                // Зареждаме отново събитията за да ги покажем в изгледа
+                ViewData["Events"] = new SelectList(_context.Events, "EventID", "EventName");
+                return View(guestToInvite); // Връщаме изгледа с грешката
+            }
 
-            // Тук добавяте логика за изпращане на покана (по имейл или друг начин)
-            // Изпращане на имейл или друго действие за поканата...
+            // Добавяне на запис в EventGuests
+            var eventGuest = new EventGuest
+            {
+                EventID = guest.EventID.Value,
+                GuestID = guestToInvite.GuestID,
+                Status = InvitationStatus.Invited // Статус "Поканен"
+            };
 
-            // Записваме промените
+            _context.EventGuests.Add(eventGuest);
+
+            // Записваме промените в базата данни
             await _context.SaveChangesAsync();
+            await SendInvitation(guestToInvite.GuestID);
 
-            return RedirectToAction(nameof(Index));  // Пренасочване към списъка с гости
+            TempData["Success"] = "Поканата е изпратена успешно!";
+
+            return RedirectToAction(nameof(Index));  // Пренасочваме към списъка с гости
         }
 
-        // POST: Guests/SendInvitation/5
-        [HttpPost]
-        public async Task<IActionResult> SendInvitation(int id)
+        public async Task<IActionResult> EventInvitations(int id) // или int guestId
         {
-            var guest = await _context.Guests.FindAsync(id);
-            if (guest == null)
+            // Зареждане на събитията, за които е поканен гостът
+            var guestInvitations = await _context.EventGuests
+                .Where(eg => eg.GuestID == id)
+                .Include(eg => eg.Event)
+                .ToListAsync();
+
+            return View(guestInvitations);
+        }
+        
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmInvitation(int eventId, int guestId)
+        {
+            // Намираме връзката между събитието и госта
+            var eventGuest = await _context.EventGuests
+                .FirstOrDefaultAsync(eg => eg.EventID == eventId && eg.GuestID == guestId);
+
+            if (eventGuest == null)
             {
                 return NotFound();
             }
 
-            // Изпращане на имейл с MailKit
+            // Променяме статуса на госта на "Приел поканата"
+            eventGuest.Status = InvitationStatus.Confirmed;
+
+            // Записваме промените в базата данни
+            await _context.SaveChangesAsync();
+
+            // Пренасочваме към изгледа за събитие
+            return RedirectToAction("Index", "Guests");
+        }
+        public async Task<IActionResult> DeclineInvitation(int eventId, int guestId)
+        {
+            // Намираме връзката между събитието и госта
+            var eventGuest = await _context.EventGuests
+                .FirstOrDefaultAsync(eg => eg.EventID == eventId && eg.GuestID == guestId);
+
+            if (eventGuest == null)
+            {
+                return NotFound();
+            }
+
+            // Изтриваме записа за поканата
+            _context.EventGuests.Remove(eventGuest);
+
+            // Записваме промените в базата данни
+            await _context.SaveChangesAsync();
+
+            // Пренасочваме към изгледа за събитие
+            return RedirectToAction("Index", "Guests");
+        }
+
+        // POST: Guests/SendInvitation/id
+        [HttpPost]
+        public async Task<IActionResult> SendInvitation(int id)
+        {
+            var guest = await _context.Guests
+                .Include(g => g.EventGuests) // Зареждаме връзката към събитията
+                .ThenInclude(eg => eg.Event) // Взимаме и информацията за самото събитие
+                .FirstOrDefaultAsync(g => g.GuestID == id);
+
+            if (guest == null || guest.EventGuests == null || !guest.EventGuests.Any())
+            {
+                return NotFound("Гостът не е намерен или няма покани за събития.");
+            }
+
+            var eventDetails = guest.EventGuests.FirstOrDefault()?.Event;
+            if (eventDetails == null)
+            {
+                return BadRequest("Гостът няма свързано събитие.");
+            }
+
+            // Създаваме имейл
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress("Event Organizer", "your-email@example.com"));
+            emailMessage.From.Add(new MailboxAddress("Event Organizer", _configuration["EmailSettings:SMTPUsername"]));
             emailMessage.To.Add(new MailboxAddress(guest.GuestName, guest.Email));
-            emailMessage.Subject = "Invitation to Event";
+            emailMessage.Subject = $"Покана за събитието: {eventDetails.EventName}";
 
             var bodyBuilder = new BodyBuilder
             {
-                TextBody = $"Dear {guest.GuestName},\nYou are invited to the event: {guest.Event.EventName}.\n\nBest regards,\nEvent Planner"
+                TextBody = $"Здравейте {guest.GuestName},\n\n" +
+                           $"Поканени сте на събитието: {eventDetails.EventName}.\n\n" +
+                           $"Дата: {eventDetails.EventDate.ToString("dd/MM/yyyy - HH.mmч.")}\n" +
+                           $"Място: {eventDetails.EventPlace}\n\n" +
+                           $"Поздрави,\nЕкипът на Event Planner"
             };
             emailMessage.Body = bodyBuilder.ToMessageBody();
 
-            // Получаване на конфигурация от appsettings.json
+            // Конфигурация за SMTP
             var smtpServer = _configuration["EmailSettings:SMTPServer"];
             var smtpPort = int.Parse(_configuration["EmailSettings:SMTPPort"]);
             var smtpUsername = _configuration["EmailSettings:SMTPUsername"];
             var smtpPassword = _configuration["EmailSettings:SMTPPassword"];
 
-            // Изпращане на имейла
-            using (var smtpClient = new SmtpClient())
+            try
             {
-                await smtpClient.ConnectAsync(_configuration["EmailSettings:SmtpServer"],
-                                             int.Parse(_configuration["EmailSettings:Port"]),
-                                             bool.Parse(_configuration["EmailSettings:UseSSL"]));
+                using (var smtpClient = new SmtpClient())
+                {
+                    await smtpClient.ConnectAsync(smtpServer, smtpPort, MailKit.Security.SecureSocketOptions.StartTls);
+                    await smtpClient.AuthenticateAsync(smtpUsername, smtpPassword);
+                    await smtpClient.SendAsync(emailMessage);
+                    await smtpClient.DisconnectAsync(true);
+                }
 
-                await smtpClient.AuthenticateAsync(_configuration["EmailSettings:Username"], _configuration["EmailSettings:Password"]);
-                await smtpClient.SendAsync(emailMessage);
-                await smtpClient.DisconnectAsync(true);
+                Console.WriteLine($"Поканата за {guest.GuestName} е изпратена успешно!");
+                TempData["SuccessMessage"] = $"Поканата беше успешно изпратена на {guest.Email}";
             }
-
-            Console.WriteLine($"Поканата за {guest.GuestName} е изпратена!");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Грешка при изпращане на поканата: {ex.Message}");
+                TempData["ErrorMessage"] = "Възникна грешка при изпращането на поканата.";
+            }
 
             return RedirectToAction(nameof(Index));
         }
-        [HttpPost]
-        public async Task<IActionResult> ConfirmAttendance(int id)
-        {
-            var guest = await _context.Guests.FindAsync(id);
-            if (guest == null)
-            {
-                return NotFound();  // Ако гостът не е намерен, връща 404
-            }
 
-            guest.RSVPStatus = "Accepted";  // Може да е "Declined" или "Pending"
-            switch (guest.RSVPStatus)
-            {
-                case "Accepted":
-                    guest.RSVPStatus = "Потвърдил";
-                    break;
-                case "Declined":
-                    guest.RSVPStatus = "Отказл";
-                    break;
-                case "Pending":
-                    guest.RSVPStatus = "В очакване";
-                    break;
-                default:
-                    break;
-            }
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("Index", "Guests");
-        }
         private bool GuestExists(int id)
         {
             return _context.Guests.Any(e => e.GuestID == id);

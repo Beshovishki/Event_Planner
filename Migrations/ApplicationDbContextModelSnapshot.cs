@@ -38,9 +38,36 @@ namespace EventPlanner.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("EventID");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("EventPlanner.Models.EventGuest", b =>
+                {
+                    b.Property<int>("EventGuestID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EventID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("GuestID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("EventGuestID");
+
+                    b.HasIndex("EventID");
+
+                    b.HasIndex("GuestID");
+
+                    b.ToTable("EventGuests");
                 });
 
             modelBuilder.Entity("EventPlanner.Models.EventTask", b =>
@@ -53,10 +80,13 @@ namespace EventPlanner.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("EventID")
+                    b.Property<int>("EventID")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("GuestID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsCompleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("TaskDescription")
@@ -64,7 +94,6 @@ namespace EventPlanner.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TaskStatus")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("EventTaskID");
@@ -90,10 +119,6 @@ namespace EventPlanner.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("GuestName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RSVPStatus")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -126,12 +151,32 @@ namespace EventPlanner.Migrations
                     b.ToTable("Ratings");
                 });
 
+            modelBuilder.Entity("EventPlanner.Models.EventGuest", b =>
+                {
+                    b.HasOne("EventPlanner.Models.Event", "Event")
+                        .WithMany("EventGuests")
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventPlanner.Models.Guest", "Guest")
+                        .WithMany("EventGuests")
+                        .HasForeignKey("GuestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Guest");
+                });
+
             modelBuilder.Entity("EventPlanner.Models.EventTask", b =>
                 {
                     b.HasOne("EventPlanner.Models.Event", "Event")
                         .WithMany("EventTasks")
                         .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EventPlanner.Models.Guest", "Guest")
                         .WithMany()
@@ -164,11 +209,18 @@ namespace EventPlanner.Migrations
 
             modelBuilder.Entity("EventPlanner.Models.Event", b =>
                 {
+                    b.Navigation("EventGuests");
+
                     b.Navigation("EventTasks");
 
                     b.Navigation("Guests");
 
                     b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("EventPlanner.Models.Guest", b =>
+                {
+                    b.Navigation("EventGuests");
                 });
 #pragma warning restore 612, 618
         }

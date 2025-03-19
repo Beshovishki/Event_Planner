@@ -1,7 +1,9 @@
-# Visual Studio & .NET build artifacts
 .vs/
+.vscode/
+.idea/
 bin/
 obj/
 *.user
 *.suo
-*.db
+*.userosscache
+*.sln.docstates

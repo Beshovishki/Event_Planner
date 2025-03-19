@@ -1,13 +1,23 @@
 ﻿@model IEnumerable<EventPlanner.Models.Event>
 
+<div id="upcomingEventsContainer" style="display: none;">
+    <button id="showUpcomingEvents" class="btn btn-warning">
+        ⚠ Имате предстоящи събития! ( <span id="eventCount"></span> )
+    </button>
+    <div id="upcomingEventsList" style="display: none;">
+        @await Html.PartialAsync("_UpcomingEvents", Model.Where(e => e.EventDate.Date >= DateTime.Now.Date && e.EventDate <= DateTime.Now.AddDays(6)).OrderBy(e => e.EventDate).Take(5).ToList())
+    </div>
+</div>
+
 @{
     ViewData["Title"] = "Събития";
 }
-
 <h1>@ViewData["Title"]</h1>
 
 <p>
     <a href="@Url.Action("Create", "Events")" class="btn btn-primary">Създаване на ново събитие</a>
+    <a href="@Url.Action("Archive", "Events")" class="btn btn-primary">Архив</a>
+    <a href="@Url.Action("Reports", "Events")" class="btn btn-primary">Отчет</a>
 </p>
 
 <table class="table">
@@ -17,9 +27,10 @@
             <th style="width: 150px">Дата и час</th>
             <th>Място</th>
             <th>Описание</th>
-            <th style="width: 136px">Средна Оценка</th>
-            <th style="width: 10px"></th>
+            <th style="width: 150px">Гласове/Оценка</th>
+            <th style="width: 100px"></th>
             <th></th>
+            <th style="width: 150px"></th>
         </tr>
     </thead>
     <tbody>
@@ -63,20 +74,22 @@
                     
                 </td>
                 <td class="assessment">
+                    <div class="d-flex gap-2">
                     @if (item.Ratings != null && item.Ratings.Any())
                     {
                         var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
-                        <span>@avgRating</span>
+                            <span>@item.Ratings.Count() / @avgRating</span>
                     }
                     else
                     {
                         <span>Без оценка</span>
                     }
+                    </div>
                 </td>
                 <td>
-                    @if (item.Description.Length > 20 || item.EventName.Length > 20 || item.EventPlace.Length > 20)
+                    @if (item.Description.Length > 20 || item.EventName.Length > 20)
                     {
-                        <button class="btn btn-primary" onclick="toggleText(event, @item.EventID)">Преглед</button>
+                        <button class="btn btn-primary" onclick="toggleText(this, @item.EventID)">Преглед</button>
                     }
                     
                 </td>
@@ -84,17 +97,44 @@
                     <div class="d-flex gap-2">
                         <a href="@Url.Action("Edit", "Events", new { id = item.EventID })" class="btn btn-warning" style="margin-right: 10px;">Редактирай</a>
                         <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" class="btn btn-danger" style="margin-right: 10px;">Изтрий</a>
-                        <a href="@Url.Action("Rate", "Events", new { id = item.EventID })" class="btn btn-success">Оценете</a>
-
+                        @if (item.EventDate < DateTime.Now){
+                            <a href="@Url.Action("Rate", "Events", new { id = item.EventID })" class="btn btn-success">Оценете</a>
+                        }
                     </div>
+                </td>
+                <td>
+                    @if (item.Ratings.Any(r => !string.IsNullOrEmpty(r.Comments)))
+                    {
+                        <button class="btn btn-info" type="button" style="margin-left: 46px" data-bs-toggle="modal" data-bs-target="#commentsModal-@item.EventID">
+                            Коментари
+                        </button>
+
+                        <div class="modal fade" id="commentsModal-@item.EventID" tabindex="-1" aria-labelledby="commentsModalLabel-@item.EventID" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Коментари за събитието</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group">
+                                            @foreach (var rating in item.Ratings.Where(r => !string.IsNullOrEmpty(r.Comments)))
+                                            {
+                                                <li class="list-group-item">@rating.Comments</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <script>
-    function toggleText(event, eventId) {
-        var button = event.target;
+    function toggleText(button, eventId) {
         var fullDescription = document.getElementById("full-description-" + eventId);
         var description = document.getElementById("description-" + eventId);
         var fullEventName = document.getElementById("full-eventName-" + eventId);
@@ -103,22 +143,35 @@
         var eventPlace = document.getElementById("eventPlace-" + eventId);
 
         // Превключваме видимостта на пълният текст за всички
-        if (fullDescription.style.display === "none" || fullEventName.style.display === "none" || fullEventPlace.style.display === "none") {
-            eventName.style.display = "none";
-            description.style.display = "none";
-            eventPlace.style.display = "none";
-            fullDescription.style.display = "block";
-            fullEventName.style.display = "block";
-            fullEventPlace.style.display = "block";
-            button.innerText = "Затвори";
-        } else {
-            eventName.style.display = "block";
-            description.style.display = "block";
-            eventPlace.style.display = "block";
-            fullDescription.style.display = "none";
-            fullEventName.style.display = "none";
-            fullEventPlace.style.display = "none";
-            button.innerText = "Преглед";
-        }
+
+        var isHidden = fullDescription.style.display === "none";
+        description.style.display = isHidden ? "none" : "block";
+        fullDescription.style.display = isHidden ? "block" : "none";
+        fullEventName.style.display === "none";
+        eventName.style.display = isHidden ? "none" : "block";
+        fullEventName.style.display = isHidden ? "block" : "none";
+        fullEventPlace.style.display === "none";
+        eventPlace.style.display = isHidden ? "none" : "block";
+        fullEventPlace.style.display = isHidden ? "block" : "none";
+        //Сменяме текста на бутона
+        button.innerText = isHidden ? "Затвори" : "Преглед";
+
     }
+        //Показваме има ли предстоящи събития и колко броя са
+        document.addEventListener("DOMContentLoaded", function () {
+        fetch("/Events/GetUpcomingEventCount")
+            .then(response => response.json())
+            .then(data => {
+                if (data.count > 0) {
+                    document.getElementById("eventCount").textContent = data.count;
+                    document.getElementById("upcomingEventsContainer").style.display = "block";
+                }
+            });
+
+       //Лиастваме предстоящите събития
+        document.getElementById("showUpcomingEvents").addEventListener("click", function () {
+            var eventList = document.getElementById("upcomingEventsList");
+            eventList.style.display = (eventList.style.display === "none") ? "block" : "none";
+        });
+    });
 </script>

@@ -1,0 +1,132 @@
+﻿@model IEnumerable<EventPlanner.Models.Event>
+<h1>Минали Събития</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Име на събитието</th>
+            <th style="width: 150px">Дата и час</th>
+            <th>Място</th>
+            <th>Описание</th>
+            <th style="width: 200px">Гласове/Оценка</th>
+            <th style="width: 100px"></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        var shortEventName = item.EventName.Length > 20 ? item.EventName.Substring(0, 20) + "..." : item.EventName;
+                    }
+                    <div id="eventName-@item.EventID" class="eventName-short">
+                        @shortEventName
+                    </div>
+                    <div id="full-eventName-@item.EventID" class="eventName-full" style="display:none;">
+                        @item.EventName
+                    </div>
+                </td>
+                <td>@item.EventDate.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>
+                    @{
+                        var shortEventPlace = item.EventPlace.Length > 20 ? item.EventPlace.Substring(0, 20) + "..." : item.EventPlace;
+                    }
+                    <div id="eventPlace-@item.EventID" class="eventPlace-short">
+                        @shortEventPlace
+                    </div>
+                    <div id="full-eventPlace-@item.EventID" class="eventPlace-full" style="display:none;">
+                        @item.EventPlace
+                    </div>
+                </td>
+                <td>
+                    @{
+                        var shortDescription = item.Description.Length > 20 ? item.Description.Substring(0, 20) + "..." : item.Description;
+                    }
+                    <div id="description-@item.EventID" class="description-short">
+                        @shortDescription
+                    </div>
+
+                    <div id="full-description-@item.EventID" class="description-full" style="display:none;">
+                        @item.Description
+                    </div>
+
+                </td>
+                <td class="assessment">
+                    <div class="d-flex gap-2">
+                        @if (item.Ratings != null && item.Ratings.Any())
+                        {
+                            var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
+                            <span>@item.Ratings.Count() / @avgRating</span>
+                           
+
+                        }
+                        else
+                        {
+                            <span>Без оценка</span>
+                        }
+                    </div>
+                </td>
+                <td>
+                    @if (item.Description.Length > 20 || item.EventName.Length > 20 || item.EventPlace.Length > 20)
+                    {
+                        <button class="btn btn-primary" onclick="toggleText(this, @item.EventID)">Преглед</button>
+                    }
+
+                </td>
+                <td>
+                    @if (item.Ratings.Any(r => !string.IsNullOrEmpty(r.Comments)))
+                    {
+                        <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#commentsModal-@item.EventID">
+                            Коментари
+                        </button>
+
+                        <div class="modal fade" id="commentsModal-@item.EventID" tabindex="-1" aria-labelledby="commentsModalLabel-@item.EventID" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Коментари за събитието</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group">
+                                            @foreach (var rating in item.Ratings.Where(r => !string.IsNullOrEmpty(r.Comments)))
+                                            {
+                                                <li class="list-group-item">@rating.Comments</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    function toggleText(button, eventId) {
+        var fullDescription = document.getElementById("full-description-" + eventId);
+        var description = document.getElementById("description-" + eventId);
+        var fullEventName = document.getElementById("full-eventName-" + eventId);
+        var eventName = document.getElementById("eventName-" + eventId);
+        var fullEventPlace = document.getElementById("full-eventPlace-" + eventId);
+        var eventPlace = document.getElementById("eventPlace-" + eventId);
+
+        // Превключваме видимостта на пълният текст за всички
+
+        var isHidden = fullDescription.style.display === "none";
+        description.style.display = isHidden ? "none" : "block";
+        fullDescription.style.display = isHidden ? "block" : "none";
+        fullEventName.style.display === "none";
+        eventName.style.display = isHidden ? "none" : "block";
+        fullEventName.style.display = isHidden ? "block" : "none";
+        fullEventPlace.style.display === "none";
+        eventPlace.style.display = isHidden ? "none" : "block";
+        fullEventPlace.style.display = isHidden ? "block" : "none";
+
+        button.innerText = isHidden ? "Затвори" : "Преглед";
+
+    }
+</script>

@@ -10,6 +10,7 @@ namespace EventPlanner.Models
         [Required(ErrorMessage = "Моля, въведете отговорник.")]
         public string? AssignedTo { get; set; } = string.Empty;
         public string? TaskStatus { get; set; } = string.Empty;
+        public bool IsCompleted { get; set; } = false;
 
         // Връзка към събитие (много към едно)
         [Required(ErrorMessage = "Моля, въведете събитие.")]

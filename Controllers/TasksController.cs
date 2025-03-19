@@ -1,11 +1,11 @@
-﻿using EventPlanner.Models;
+﻿using System.Threading.Tasks;
+using EventPlanner.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventPlanner.Controllers.TaskController
 {
-
     public class TasksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -37,6 +37,14 @@ namespace EventPlanner.Controllers.TaskController
         {
             if (ModelState.IsValid)
             {
+                if (eventTask.TaskStatus == "Completed")
+                {
+                    eventTask.IsCompleted = true;
+                }
+                else
+                {
+                    eventTask.IsCompleted = false;
+                }
                 _context.Add(eventTask);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -45,7 +53,7 @@ namespace EventPlanner.Controllers.TaskController
             return View(eventTask);
         }
 
-        // GET: EventTask/Edit/5
+        // GET: EventTask/Edit/id
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -63,7 +71,7 @@ namespace EventPlanner.Controllers.TaskController
             return View(eventTask);
         }
 
-        // POST: EventTask/Edit/5
+        // POST: EventTask/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EventTaskID,TaskDescription,TaskStatus,EventID, AssignedTo")] EventTask eventTask)
@@ -77,6 +85,15 @@ namespace EventPlanner.Controllers.TaskController
             {
                 try
                 {
+                    // Ако статусът е "Completed", задаваме IsCompleted = true
+                    if (eventTask.TaskStatus == "Completed")
+                    {
+                        eventTask.IsCompleted = true;
+                    }
+                    else
+                    {
+                        eventTask.IsCompleted = false;
+                    }
                     _context.Update(eventTask);
                     await _context.SaveChangesAsync();
                 }
@@ -96,7 +113,7 @@ namespace EventPlanner.Controllers.TaskController
             ViewData["Events"] = new SelectList(_context.Events, "EventID", "EventName", eventTask.EventID);
             return View(eventTask);
         }
-        // GET: Guests/Delete/5
+        // GET: Guests/Delete/id
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -113,7 +130,7 @@ namespace EventPlanner.Controllers.TaskController
 
             return View(eventTask);
         }
-        // POST: EventTask/Delete/5
+        // POST: EventTask/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -127,13 +144,9 @@ namespace EventPlanner.Controllers.TaskController
 
             return RedirectToAction(nameof(Index));
         }
-        
-
-
         private bool EventTaskExists(int id)
         {
             return _context.EventTasks.Any(e => e.EventTaskID == id);
         }
-
     }
 }

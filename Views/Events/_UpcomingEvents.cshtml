@@ -1,0 +1,21 @@
+﻿@model List<EventPlanner.Models.Event>
+
+@if (Model.Any())
+{
+    <div class="upcoming-events">
+        <h3>Предстоящи събития</h3>
+        <div class="form-control">
+            @foreach (var eventItem in Model)
+            {
+                    <ul>
+                        @eventItem.EventName - @eventItem.EventDate.ToString("dd.MM.yyyy-HH.mmч.") (@eventItem.EventPlace)
+                    </ul>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>Няма предстоящи събития.</p>
+}
+

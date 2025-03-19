@@ -12,7 +12,7 @@
         <tr>
             <th>Име на гост</th>
             <th>Email</th>
-            <th>Статус</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -23,34 +23,17 @@
                 <td>@guest.GuestName</td>
                 <td>@guest.Email</td>
                 <td>
-                    @switch (guest.RSVPStatus)
-                    {
-                        case "NotInvited":
-                            <text>В очакване</text>
-                            break;
-                        case "Invited":
-                            <text>Поканен</text>
-                            break;
-                        case "Confirmed":
-                            <text>Потвърдил</text>
-                        break;
-                        case "Declined":
-                            <text>Отказал</text>
-                            break;
-                        default:
-                            <text>@guest.RSVPStatus</text>
-                        break;
-                }
-                </td>
-                <td>
                     <div class="d-flex gap-2">
                         <a href="@Url.Action("Edit", "Guests", new { id = guest.GuestID })" class="btn btn-warning">Редактирай</a>
-                        <form href="@Url.Action("Invitation", "Guests", new { id = guest.GuestID })" class="btn btn-primary">
-                            Изпрати покана
-                        </form>
-                        <form asp-action="ConfirmAttendance" method="post" asp-route-id="@guest.GuestID">
-                            <button type="submit" class="btn btn-success">Потвърди</button>
-                        </form>
+                        <a href="@Url.Action("Invitation", "Guests", new { id = guest.GuestID })" class="btn btn-primary">Изпрати покана</a>
+                        @if (guest.EventGuests.Any(eg => eg.Status == InvitationStatus.Invited || eg.Status == InvitationStatus.Confirmed))
+                        {
+                            <a href="@Url.Action("EventInvitations", "Guests", new { id = guest.GuestID })" class="btn btn-success">Потвърди/Откажи</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn btn-success disabled" aria-disabled="true" style="padding: 6px 28px 6px 28px">Няма събития</a>
+                        }
                         <form asp-action="Delete" asp-route-id="@guest.GuestID" method="post" style="display:inline-block;">
                             <a href="@Url.Action("Delete", "Guests", new { id = guest.GuestID })" class="btn btn-danger">Изтрий</a>
                         </form>
@@ -59,5 +42,4 @@
             </tr>
         }
 </tbody>
-
 </table>

@@ -1,5 +1,7 @@
 ﻿@model EventPlanner.Models.Event
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.11/dist/jquery.validate.unobtrusive.min.js"></script>
 @{
     ViewData["Title"] = "Създаване на събитие";
 }
@@ -18,9 +20,8 @@
     
     <div class="form-group">
         <label asp-for="EventDate" class="control-label">Дата</label>
-        <input asp-for="EventDate" class="form-control" />
+        <input id="EventDate" asp-for="EventDate" type="datetime-local" class="form-control" />
         <span asp-validation-for="EventDate" class="text-danger"></span>
-
     </div>
 
     <div class="form-group">
@@ -38,23 +39,5 @@
         <button type="submit" class="btn btn-primary">Създай</button>
         <a asp-action="Index" class="btn btn-secondary">Откажи</a>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const dateField = document.querySelector("[name='EventDate']");
-            const validationMessage = document.querySelector("[data-valmsg-for='EventDate']");
-
-            if (dateField && validationMessage) {
-                dateField.addEventListener("invalid", function(event) {
-                    event.preventDefault(); // Спира стандартното съобщение
-                    validationMessage.textContent = "Моля, въведете дата на събитието.";
-                });
-
-                // За да прихванем и грешката от сървърната страна при submit
-                dateField.addEventListener("input", function () {
-                    validationMessage.textContent = ""; // Изчиства съобщението при корекция
-                });
-            }
-        });
-    </script>
 </form>
 

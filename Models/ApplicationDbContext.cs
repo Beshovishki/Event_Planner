@@ -14,28 +14,44 @@ namespace EventPlanner.Models
         public DbSet<Guest> Guests { get; set; }
         public DbSet<EventTask> EventTasks { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<EventGuest> EventGuests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);  // Извикване на base метода
 
-            // CASCADE DELETE за Guests
+            // Конфигурира връзката между Guest и Event
             modelBuilder.Entity<Guest>()
                 .HasOne(g => g.Event)
                 .WithMany(e => e.Guests)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // CASCADE DELETE за EventTasks
+            // Конфигурира връзката между EventTask и Event
             modelBuilder.Entity<EventTask>()
                 .HasOne(et => et.Event)
                 .WithMany(e => e.EventTasks)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // CASCADE DELETE за Ratings
+            // Конфигурира връзката между Rating и Event
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.Event)
                 .WithMany(e => e.Ratings)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Конфигурира връзката между EventGuest и Guest
+            modelBuilder.Entity<EventGuest>()
+                .HasOne(eg => eg.Guest)
+                .WithMany(g => g.EventGuests)
+                .HasForeignKey(eg => eg.GuestID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Конфигурира връзката между EventGuest и Event
+            modelBuilder.Entity<EventGuest>()
+                .HasOne(eg => eg.Event)
+                .WithMany(e => e.EventGuests)
+                .HasForeignKey(eg => eg.EventID)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }
