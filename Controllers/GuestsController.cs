@@ -27,7 +27,9 @@ namespace EventPlanner.Controllers.GuestController
         
         public async Task<IActionResult> Index()
         {
-            var guests = await _context.Guests.Include(g => g.EventGuests).ToListAsync();
+            var guests = await _context.Guests.Include(g => g.EventGuests)
+                .OrderBy(g => g.GuestName)
+                .ToListAsync();
             return View(guests);
         }
         // GET: Guests/Create

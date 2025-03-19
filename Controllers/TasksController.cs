@@ -53,7 +53,7 @@ namespace EventPlanner.Controllers.TaskController
             return View(eventTask);
         }
 
-        // GET: EventTask/Edit/5
+        // GET: EventTask/Edit/id
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -71,7 +71,7 @@ namespace EventPlanner.Controllers.TaskController
             return View(eventTask);
         }
 
-        // POST: EventTask/Edit/5
+        // POST: EventTask/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EventTaskID,TaskDescription,TaskStatus,EventID, AssignedTo")] EventTask eventTask)
@@ -113,7 +113,7 @@ namespace EventPlanner.Controllers.TaskController
             ViewData["Events"] = new SelectList(_context.Events, "EventID", "EventName", eventTask.EventID);
             return View(eventTask);
         }
-        // GET: Guests/Delete/5
+        // GET: Guests/Delete/id
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -130,7 +130,7 @@ namespace EventPlanner.Controllers.TaskController
 
             return View(eventTask);
         }
-        // POST: EventTask/Delete/5
+        // POST: EventTask/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

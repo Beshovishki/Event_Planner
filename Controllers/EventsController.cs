@@ -18,44 +18,18 @@ namespace EventPlanner.Controllers
 
         public async Task<IActionResult> Index(bool showArchived = false)
         {
-            // Ако е избрано да се показват архивираните събития
-            if (showArchived)
-            {
-                var archivedEvents = await _context.Events
-                    .Where(e => e.IsArchived == true) // Филтрираме само архивираните събития
-                    .Include(e => e.Ratings) // Зареждаме всички оценки за всяко събитие
-                    .OrderBy(e => e.EventDate)
-                    .ToListAsync();
-
-                return View(archivedEvents);
-            }
-            else
-            {
-                var events = await _context.Events
+            var events = await _context.Events
                     .Where(e => e.EventDate >= DateTime.Now || (e.EventDate.AddDays(5) >= DateTime.Now && e.IsArchived == false)) // Включва бъдещи събития и събития, които не са архивирани
                     .Include(e => e.Ratings) // Зареждаме всички оценки за всяко събитие
                     .OrderBy(e => e.EventDate)
                     .ToListAsync();
 
-                return View(events);
-            }
+            return View(events);
         }
-        public async Task ArchiveEvents()
-        {
-            var eventsToArchive = await _context.Events
-                .Where(e => e.EventDate.AddDays(5) < DateTime.Now && !e.IsArchived) // Събития, които са преминали 5 дни и не са архивирани
-                .ToListAsync();
-
-            foreach (var eventItem in eventsToArchive)
-            {
-                eventItem.IsArchived = true; // Маркираме събитието като архивирано
-            }
-
-            await _context.SaveChangesAsync(); // Записваме промените в базата данни
-        }
+      
         public async Task<IActionResult> Archive()
         {
-            // Зареждаме събития, които са преминали повече от 5 дни
+            // Зареждаме събития, които са преминали повече от 5 дни след датата им
             var archivedEvents = await _context.Events
                 .Where(e => e.EventDate.AddDays(5) < DateTime.Now) // Събития, които са завършили преди повече от 5 дни
                 .Include(e => e.Ratings) // Зареждаме оценките

@@ -81,8 +81,6 @@
                     {
                         var avgRating = item.Ratings.Any() ? Math.Round(item.Ratings.Average(r => r.RatingValue ?? 0), 2) : 0;
                             <span>@item.Ratings.Count() / @avgRating</span>
-                       
-                        
                     }
                     else
                     {
@@ -157,10 +155,11 @@
         fullEventPlace.style.display === "none";
         eventPlace.style.display = isHidden ? "none" : "block";
         fullEventPlace.style.display = isHidden ? "block" : "none";
-
+        //Сменяме текста на бутона
         button.innerText = isHidden ? "Затвори" : "Преглед";
 
     }
+        //Показваме има ли предстоящи събития и колко броя са
         document.addEventListener("DOMContentLoaded", function () {
         fetch("/Events/GetUpcomingEventCount")
             .then(response => response.json())
@@ -171,6 +170,7 @@
                 }
             });
 
+       //Лиастваме предстоящите събития
         document.getElementById("showUpcomingEvents").addEventListener("click", function () {
             var eventList = document.getElementById("upcomingEventsList");
             eventList.style.display = (eventList.style.display === "none") ? "block" : "none";
