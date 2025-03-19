@@ -16,8 +16,6 @@
             <div class="d-flex gap-2">
                 @if (eventGuest.Status == InvitationStatus.Invited) // Ако гостът е поканен, но не е потвърдил
                 {
-
-
                     <form method="post" action="@Url.Action("ConfirmInvitation", "Guests", new { eventId = eventGuest.EventID, guestId = eventGuest.GuestID })">
                         <button type="submit" class="btn btn-success">Потвърди</button>
                     </form>

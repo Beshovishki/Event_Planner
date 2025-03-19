@@ -54,7 +54,7 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // GET: Guest/Edit/5
+        // GET: Guest/Edit/id
         
         public async Task<IActionResult> Edit(int? id)
         {
@@ -71,7 +71,7 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // POST: Guest/Edit/5
+        // POST: Guest/Edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
         
@@ -105,7 +105,7 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // GET: Guests/Delete/5
+        // GET: Guests/Delete/id
         
         public async Task<IActionResult> Delete(int? id)
         {
@@ -124,21 +124,25 @@ namespace EventPlanner.Controllers.GuestController
             return View(guest);
         }
 
-        // POST: Guests/Delete/5
+        // POST: Guests/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var guest = await _context.Guests.FindAsync(id);
-            _context.Guests.Remove(guest);
-            await _context.SaveChangesAsync();
+            if (guest != null)
+            {
+                _context.Guests.Remove(guest);
+                await _context.SaveChangesAsync();
+                
+            }
             return RedirectToAction(nameof(Index));
         }
         // GET: Guests/Invitation/5
         public IActionResult Invitation(int id)
         {
-            // Вземете госта по ID
+            // Взимане госта по id
             var guest = _context.Guests.FirstOrDefault(g => g.GuestID == id);
 
             if (guest == null)
@@ -146,16 +150,16 @@ namespace EventPlanner.Controllers.GuestController
                 return NotFound();
             }
 
-            // Вземете всички събития, за да могат да се изберат
+            // Взимане всички събития, за да могат да се изберат
             var events = _context.Events
                     .Where(e => !_context.EventGuests.Any(eg => eg.EventID == e.EventID && eg.GuestID == guest.GuestID))
                     .ToList();
             ViewData["Events"] = new SelectList(events, "EventID", "EventName");
 
-            return View(guest);  // Изпратете госта в изгледа
+            return View(guest);  // Изпраща госта в изгледа
         }
 
-        // POST: Guests/Invitation/5
+        // POST: Guests/Invitation/id
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Invitation(int id, [Bind("EventID")] Guest guest)
@@ -197,7 +201,7 @@ namespace EventPlanner.Controllers.GuestController
 
         public async Task<IActionResult> EventInvitations(int id) // или int guestId
         {
-            // Логика за зареждане на събитията, за които е поканен гостът
+            // Зареждане на събитията, за които е поканен гостът
             var guestInvitations = await _context.EventGuests
                 .Where(eg => eg.GuestID == id)
                 .Include(eg => eg.Event)
@@ -205,7 +209,7 @@ namespace EventPlanner.Controllers.GuestController
 
             return View(guestInvitations);
         }
-        // POST: Guests/SendInvitation/5
+        
 
         [HttpPost]
         public async Task<IActionResult> ConfirmInvitation(int eventId, int guestId)
@@ -248,6 +252,8 @@ namespace EventPlanner.Controllers.GuestController
             // Пренасочваме към изгледа за събитие
             return RedirectToAction("Index", "Guests");
         }
+
+        // POST: Guests/SendInvitation/id
         [HttpPost]
         public async Task<IActionResult> SendInvitation(int id)
         {

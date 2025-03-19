@@ -2,7 +2,7 @@
 
 <div id="upcomingEventsContainer" style="display: none;">
     <button id="showUpcomingEvents" class="btn btn-warning">
-        ⚠ Имате ( <span id="eventCount"></span> ) предстоящи събития!
+        ⚠ Имате предстоящи събития! ( <span id="eventCount"></span> )
     </button>
     <div id="upcomingEventsList" style="display: none;">
         @await Html.PartialAsync("_UpcomingEvents", Model.Where(e => e.EventDate.Date >= DateTime.Now.Date && e.EventDate <= DateTime.Now.AddDays(6)).OrderBy(e => e.EventDate).Take(5).ToList())
@@ -12,8 +12,6 @@
 @{
     ViewData["Title"] = "Събития";
 }
-
-
 <h1>@ViewData["Title"]</h1>
 
 <p>

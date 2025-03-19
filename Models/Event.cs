@@ -12,8 +12,7 @@ namespace EventPlanner.Models
         public int EventID { get; set; }
         [Required(ErrorMessage = "Моля, въведете име на събитието.")]
         public string EventName { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Моля, въведете дата за събитието.")]
-        [DataType(DataType.Date, ErrorMessage = "Моля, въведете валидна дата.")]
+        [Required(ErrorMessage = "Моля, въведете дата на събитието.")]
         public DateTime EventDate { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Моля, въведете място на събитието.")]
         public string EventPlace { get; set; } = string.Empty;
@@ -30,7 +29,7 @@ namespace EventPlanner.Models
         // Навигационно свойство за оценките (едно към много)
         public ICollection<Rating> Ratings { get; set; } = new HashSet<Rating>();
 
-        public bool IsArchived { get; set; } = false; // По подразбиране събитията не са архивирани
+        public bool IsArchived { get; set; } = false; // По подразбиране събитията не са архивирани (не се използва в момента)
 
         [NotMapped]
         public int GuestCount { get; set; }

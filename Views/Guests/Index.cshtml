@@ -34,10 +34,6 @@
                         {
                             <a href="#" class="btn btn-success disabled" aria-disabled="true" style="padding: 6px 28px 6px 28px">Няма събития</a>
                         }
-                        
-                        @* <form asp-action="ConfirmAttendance" method="post" asp-route-id="@guest.GuestID">
-                            <button type="submit" class="btn btn-success">Потвърди</button>
-                        </form> *@
                         <form asp-action="Delete" asp-route-id="@guest.GuestID" method="post" style="display:inline-block;">
                             <a href="@Url.Action("Delete", "Guests", new { id = guest.GuestID })" class="btn btn-danger">Изтрий</a>
                         </form>
@@ -46,5 +42,4 @@
             </tr>
         }
 </tbody>
-
 </table>

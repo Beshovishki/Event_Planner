@@ -26,7 +26,7 @@ namespace EventPlanner.Controllers
 
             return View(events);
         }
-      
+      //GET: Events/Archive
         public async Task<IActionResult> Archive()
         {
             // Зареждаме събития, които са преминали повече от 5 дни след датата им
@@ -184,13 +184,14 @@ namespace EventPlanner.Controllers
         }
         public async Task<IActionResult> Reports(DateTime? startDate, DateTime? endDate, string? location)
         {
+            //Съдържание на отчетите
             var query = _context.Events
                 .Include(e => e.Guests)
                 .Include(e => e.EventTasks)
                 .Include(e => e.Ratings)
                 .OrderBy(e => e.EventDate)
                 .AsQueryable();
-
+            //Филтри за търсене
             if (startDate.HasValue)
             {
                 query = query.Where(e => e.EventDate >= startDate.Value);
@@ -216,6 +217,7 @@ namespace EventPlanner.Controllers
 
             return View(events);
         }
+        //Взимане на предстоящи събития 5 дни напред
         public IActionResult GetUpcomingEventCount()
         {
             var count = _context.Events
@@ -224,7 +226,7 @@ namespace EventPlanner.Controllers
 
             return Json(new { count });
         }
-
+        //Взимане на оценка
         public int GetVoteCount(int eventId)
         {
             return _context.Ratings.Count(r => r.EventID == eventId);
