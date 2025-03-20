@@ -3,7 +3,7 @@
 .idea/
 bin/
 obj/
-*.user
+*.userг
 *.suo
 *.userosscache
 *.sln.docstates

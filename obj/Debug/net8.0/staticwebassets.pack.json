@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\favicon_Old.ico",
+      "PackagePath": "staticwebassets\\favicon_Old.ico"
+    },
+    {
       "Id": "D:\\Downloads\\GitHub\\EventPlanner\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

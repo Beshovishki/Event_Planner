@@ -9,6 +9,7 @@
             <th>Описание</th>
             <th style="width: 200px">Гласове/Оценка</th>
             <th style="width: 100px"></th>
+            <th style="width: 106px"></th>
             <th></th>
         </tr>
     </thead>
@@ -73,6 +74,9 @@
                         <button class="btn btn-primary" onclick="toggleText(this, @item.EventID)">Преглед</button>
                     }
 
+                </td>
+                <td >
+                    <a href="@Url.Action("Delete", "Events", new { id = item.EventID })" style="margin-left: 4px" class="btn btn-danger">Изтрий</a>
                 </td>
                 <td>
                     @if (item.Ratings.Any(r => !string.IsNullOrEmpty(r.Comments)))
