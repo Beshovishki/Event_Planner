@@ -189,7 +189,7 @@ namespace EventPlanner.Controllers
                 .Include(e => e.Guests)
                 .Include(e => e.EventTasks)
                 .Include(e => e.Ratings)
-                .OrderBy(e => e.EventDate)
+                .OrderByDescending(e => e.EventDate)
                 .AsQueryable();
             //Филтри за търсене
             if (startDate.HasValue)
