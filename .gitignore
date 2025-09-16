@@ -3,7 +3,10 @@
 .idea/
 bin/
 obj/
-*.userг
+*.user
 *.suo
 *.userosscache
 *.sln.docstates
+publish/
+*.db
+*.log

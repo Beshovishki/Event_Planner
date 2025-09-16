@@ -17,14 +17,15 @@ html {
   min-height: 100%;
 }
 header {
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     left: 0;
+    height: 70px;
     width: 100%;
     z-index: 1000; /* Над другите елементи */
 }
 body {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
     margin-bottom: 60px;
     overflow-y: scroll;
 }
@@ -33,7 +34,8 @@ body {
 /*--------------------------------------------------------*/
 .container {
     max-width: 95%;
-    padding: 20px;
+    /*padding-top: 250px;*/
+    /*padding: 20px;*/
     box-sizing: content-box; /* Пример за промяна на box-sizing */
     margin-right:5px;
     margin-left: 5px;

@@ -153,6 +153,7 @@ namespace EventPlanner.Controllers.GuestController
             // Взимане всички събития, за да могат да се изберат
             var events = _context.Events
                     .Where(e => !_context.EventGuests.Any(eg => eg.EventID == e.EventID && eg.GuestID == guest.GuestID))
+                    .Where(e => e.EventDate > DateTime.Now)  // Добавяне на проверка за дата ако е минало събитие не се подава
                     .ToList();
             ViewData["Events"] = new SelectList(events, "EventID", "EventName");
 

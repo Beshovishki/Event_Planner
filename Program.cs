@@ -7,7 +7,11 @@ namespace EventPlanner
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
+            builder.WebHost.UseUrls("http://0.0.0.0:5000");
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+            builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
