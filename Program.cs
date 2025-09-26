@@ -1,67 +1,79 @@
 using EventPlanner.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventPlanner
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-
             var builder = WebApplication.CreateBuilder(args);
-            builder.WebHost.UseUrls("http://0.0.0.0:5000");
+
+            // Настройка на порт
             var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
             builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
+            // Настройка на DbContext
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlite(connectionString));
+
+            // Добавяне на Identity
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false; // за тест локално
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-
             var app = builder.Build();
+
+            // Създаване на роли и админ акаунт, ако не съществуват
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+                string[] roles = new[] { "Admin", "User" };
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                }
+
+                string adminEmail = "admin@example.com";
+                string adminPassword = "Admin123!";
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                if (adminUser == null)
+                {
+                    var newAdmin = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+                    var result = await userManager.CreateAsync(newAdmin, adminPassword);
+                    if (result.Succeeded)
+                        await userManager.AddToRoleAsync(newAdmin, "Admin");
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseWebSockets();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
+            app.UseAuthentication(); // <- Важно, за да работи login
             app.UseAuthorization();
 
             app.MapControllerRoute(
-                 name: "default",
-                  pattern: "{controller=Events}/{action=Index}/{id?}");
-
-            app.MapControllerRoute(
-                 name: "guests",
-                pattern: "Guests/{action=Index}/{id?}");
-
-            app.MapControllerRoute(
-                name: "tasks",
-                pattern: "Tasks/{action=Index}/{id?}");
-            app.MapControllerRoute(
-                name: "rating",
-                pattern: "{controller=Events}/{action=Rate}/{id?}");
-            app.MapControllerRoute(
-                name: "reports",
-                pattern: "{controller=Events}/{action=Reports}/{id?}");
-            app.MapControllerRoute(
-                name: "invitation",
-                pattern: "{controller=Guests}/{action=Invitation}/{id?}");
-            app.MapControllerRoute(
-                name: "confirmInvitations",
-                pattern: "{controller=Guests}/{action=ConfirmInvitation}/{id?}");
-            app.MapControllerRoute(
-                name: "eventInvitations",
-                pattern: "{controller=Guests}/{action=EventInvitations}/{id?}");
+                name: "default",
+                pattern: "{controller=Events}/{action=Index}/{id?}");
 
             app.Run();
         }
