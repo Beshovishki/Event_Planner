@@ -45,12 +45,13 @@ namespace EventPlanner
                         await roleManager.CreateAsync(new IdentityRole(role));
                 }
 
-                string adminEmail = "admin@example.com";
+                string adminEmail = "atanas.beshovishki@gmail.com";
+                string userName = "Atanas";
                 string adminPassword = "Admin123!";
                 var adminUser = await userManager.FindByEmailAsync(adminEmail);
                 if (adminUser == null)
                 {
-                    var newAdmin = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+                    var newAdmin = new IdentityUser { UserName = userName, Email = adminEmail, EmailConfirmed = true };
                     var result = await userManager.CreateAsync(newAdmin, adminPassword);
                     if (result.Succeeded)
                         await userManager.AddToRoleAsync(newAdmin, "Admin");

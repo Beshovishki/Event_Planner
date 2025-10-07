@@ -1,38 +1,46 @@
-﻿@model IEnumerable<EventPlanner.Models.AppUser>
+﻿
+@model IEnumerable<EventPlanner.Models.AppUser>
 
 @{
-    ViewData["Title"] = "Admin Panel";
+    ViewData["Title"] = "Админ - Потребители";
 }
 
-<h2>Admin Panel</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h2>Потребители</h2>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>User Id</th>
-            <th>Email</th>
-            <th>Username</th>
-            <th>Role</th>
+            <th>Имейл</th>
+            <th>Потребителско име</th>
+            <th>Роля</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.Id</td>
-                    <td>@user.Email</td>
-                    <td>@user.UserName</td>
-                    <td>@user.Role</td>
-                </tr>
-            }
-        }
-        else
+        @foreach (var user in Model)
         {
             <tr>
-                <td colspan="4" class="text-center">No users found.</td>
+                <td>@user.Email</td>
+                <td>@user.UserName</td>
+                <td>@user.Role</td>
+                <td>
+                    @* Бутон за редакция *@
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+
+                    @* Бутон за изтриване *@
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+@* Бутон за добавяне на нов потребител *@
+<a class="btn btn-success" asp-action="Create">Добави нов потребител</a>

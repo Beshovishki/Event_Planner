@@ -1,22 +1,56 @@
-﻿@{
-    ViewBag.Title = "Създай потребител";
+﻿@model EventPlanner.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Създай потребител";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>@ViewData["Title"]</h2>
 
 <form asp-action="Create" method="post">
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" class="form-control" required />
+    <div class="form-group mb-3">
+    <label>Потребителско име</label>
+    <input type="text" name="UserName" class="form-control" required />
+</div>
+
+
+    <div class="form-group mb-3">
+        <label asp-for="Email" class="form-label">Имейл</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label>Парола</label>
+
+    <div class="form-group mb-3">
+        <label for="password" class="form-label">Парола</label>
         <input type="password" name="password" class="form-control" required />
+        <small class="form-text text-muted">
+            Паролата трябва да съдържа поне една главна буква, една цифра и един специален символ.
+        </small>
     </div>
-    <div class="form-group">
-        <label>Роля</label>
-        <input type="text" name="role" class="form-control" value="User" />
+
+    <div class="mb-3">
+        <label asp-for="ConfirmPassword" class="form-label">Повтори паролата</label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-success">Създай</button>
-    <a asp-action="Index" class="btn btn-secondary">Откажи</a>
+
+
+    <div class="form-group mb-3">
+        <label for="role" class="form-label">Роля</label>
+        <select id="role" name="role" class="form-control">
+            @foreach(var r in ViewBag.Roles)
+            {
+                <option value="@r.Name">@r.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Тук показваме всички грешки от ModelState, включително за парола -->
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <button type="submit" class="btn btn-primary">Създай</button>
+    <a asp-action="Index" class="btn btn-secondary">Отказ</a>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

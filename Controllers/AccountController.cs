@@ -31,14 +31,13 @@ public class AccountController : Controller
             return View(model);
         }
 
-        if (model.Password != model.ConfirmPassword)
+        var user = new IdentityUser
         {
-            ModelState.AddModelError("", "Паролите не съвпадат.");
-            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-            return View(model);
-        }
+            UserName = model.UserName,
+            Email = model.Email,
+            EmailConfirmed = true
+        };
 
-        var user = new IdentityUser { UserName = model.Email, Email = model.Email, EmailConfirmed = true };
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (!result.Succeeded)
@@ -56,19 +55,21 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Events");
     }
 
-
-
     // GET: /Account/Login
     public IActionResult Login() => View();
 
     // POST: /Account/Login
+
     [HttpPost]
     public async Task<IActionResult> Login(string email, string password)
     {
-        var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
-
-        if (result.Succeeded)
-            return RedirectToAction("Index", "Events");
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Events");
+        }
 
         ModelState.AddModelError("", "Невалидни данни за вход");
         return View();
