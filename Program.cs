@@ -10,35 +10,46 @@ namespace EventPlanner
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Настройка на порт
             var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
             builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
-            // Настройка на DbContext
+            // ✅ POSTGRESQL (ВАЖНО)
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(connectionString));
 
-            // Добавяне на Identity
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(connectionString));
+
+            // ✅ Identity (важно: ApplicationUser)
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false; // за тест локално
+                options.SignIn.RequireConfirmedAccount = false;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
-            // Създаване на роли и админ акаунт, ако не съществуват
+            // =========================
+            // 🔧 MIGRATION (ЗАДЪЛЖИТЕЛНО)
+            // =========================
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                db.Database.Migrate();
+            }
+
+            // =========================
+            // 🔐 ROLES + ADMIN SEED
+            // =========================
             using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
                 string[] roles = new[] { "Admin", "User" };
+
                 foreach (var role in roles)
                 {
                     if (!await roleManager.RoleExistsAsync(role))
@@ -46,19 +57,26 @@ namespace EventPlanner
                 }
 
                 string adminEmail = "atanas.beshovishki@gmail.com";
-                string userName = "Atanas";
                 string adminPassword = "Admin123!";
+
                 var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
                 if (adminUser == null)
                 {
-                    var newAdmin = new IdentityUser { UserName = userName, Email = adminEmail, EmailConfirmed = true };
+                    var newAdmin = new ApplicationUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+
                     var result = await userManager.CreateAsync(newAdmin, adminPassword);
+
                     if (result.Succeeded)
                         await userManager.AddToRoleAsync(newAdmin, "Admin");
                 }
             }
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -69,7 +87,7 @@ namespace EventPlanner
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseAuthentication(); // <- Важно, за да работи login
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
