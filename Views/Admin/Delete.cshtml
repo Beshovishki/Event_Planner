@@ -1,0 +1,48 @@
+﻿@model EventPlanner.Models.AppUser
+
+@{
+    ViewData["Title"] = "Изтриване на потребител";
+}
+
+<h2 class="mb-3">Изтриване на потребител</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<div class="card shadow-sm p-3">
+    <div class="card-body">
+        <p>Сигурни ли сте, че искате да изтриете следния потребител?</p>
+        <ul>
+            <li><strong>Име:</strong> @Model.UserName</li>
+            <li><strong>Имейл:</strong> @Model.Email</li>
+            <li><strong>Роля:</strong> @Model.Role</li>
+        </ul>
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            <button type="submit" class="btn btn-danger">Изтрий</button>
+            <a asp-action="Index" class="btn btn-secondary">Откажи</a>
+        </form>
+    </div>
+</div>
+
+
+@* @{
+    ViewBag.Title = "Изтриване на потребител";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Сигурни ли сте, че искате да изтриете @Model.UserName?</h3>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-danger">Изтрий</button>
+    <a asp-action="Index" class="btn btn-secondary">Откажи</a>
+</form> *@
