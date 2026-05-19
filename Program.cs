@@ -30,16 +30,40 @@ namespace EventPlanner
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+            Console.WriteLine("APP BUILD SUCCESS");
 
             // =========================
             // 🔧 MIGRATION (ЗАДЪЛЖИТЕЛНО)
             // =========================
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //    Console.WriteLine("STARTING MIGRATION");
+
+            //    db.Database.Migrate();
+
+            //    Console.WriteLine("MIGRATION FINISHED");
+            //}
             using (var scope = app.Services.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                db.Database.Migrate();
-            }
+                try
+                {
+                    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+                    Console.WriteLine("STARTING MIGRATION");
+
+                    db.Database.Migrate();
+
+                    Console.WriteLine("MIGRATION FINISHED");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("MIGRATION ERROR:");
+                    Console.WriteLine(ex.ToString());
+
+                    throw;
+                }
+            }
             // =========================
             // 🔐 ROLES + ADMIN SEED
             // =========================
@@ -50,11 +74,15 @@ namespace EventPlanner
 
                 string[] roles = new[] { "Admin", "User" };
 
+                Console.WriteLine("STARTING ROLE SEED");
+
                 foreach (var role in roles)
                 {
                     if (!await roleManager.RoleExistsAsync(role))
                         await roleManager.CreateAsync(new IdentityRole(role));
                 }
+
+                Console.WriteLine("ROLE SEED FINISHED");
 
                 string adminEmail = "atanas.beshovishki@gmail.com";
                 string adminPassword = "Admin123!";
@@ -93,6 +121,8 @@ namespace EventPlanner
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Events}/{action=Index}/{id?}");
+
+            Console.WriteLine("APP STARTING");
 
             app.Run();
         }
