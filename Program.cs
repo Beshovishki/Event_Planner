@@ -45,25 +45,25 @@ namespace EventPlanner
             //    Console.WriteLine("MIGRATION FINISHED");
             //}
             using (var scope = app.Services.CreateScope())
-            {
-                try
-                {
-                    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+{
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                    Console.WriteLine("STARTING MIGRATION");
+        Console.WriteLine("STARTING MIGRATION");
 
-                    db.Database.Migrate();
+        db.Database.Migrate();
 
-                    Console.WriteLine("MIGRATION FINISHED");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("MIGRATION ERROR:");
-                    Console.WriteLine(ex.ToString());
+        Console.WriteLine("MIGRATION FINISHED");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("MIGRATION ERROR:");
+        Console.WriteLine(ex.ToString());
 
-                    throw;
-                }
-            }
+        throw;
+    }
+}
             // =========================
             // 🔐 ROLES + ADMIN SEED
             // =========================
