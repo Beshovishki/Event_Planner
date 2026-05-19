@@ -14,10 +14,27 @@ namespace EventPlanner
             builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
             // ✅ POSTGRESQL (ВАЖНО)
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new Exception("Missing PostgreSQL connection string!");
+            }
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString));
+            {
+                var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+
+                if (string.IsNullOrWhiteSpace(conn))
+                    throw new Exception("Missing DB connection string");
+
+                options.UseNpgsql(conn, npgsql =>
+                {
+                    npgsql.EnableRetryOnFailure();
+                });
+            });
 
             // ✅ Identity (важно: ApplicationUser)
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
