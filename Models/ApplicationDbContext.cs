@@ -26,33 +26,33 @@ namespace EventPlanner.Models
             modelBuilder.Entity<Guest>()
                 .HasOne(g => g.Event)
                 .WithMany(e => e.Guests)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Конфигурира връзката между EventTask и Event
             modelBuilder.Entity<EventTask>()
                 .HasOne(et => et.Event)
                 .WithMany(e => e.EventTasks)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Конфигурира връзката между Rating и Event
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.Event)
                 .WithMany(e => e.Ratings)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Конфигурира връзката между EventGuest и Guest
             modelBuilder.Entity<EventGuest>()
                 .HasOne(eg => eg.Guest)
                 .WithMany(g => g.EventGuests)
                 .HasForeignKey(eg => eg.GuestID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Конфигурира връзката между EventGuest и Event
             modelBuilder.Entity<EventGuest>()
                 .HasOne(eg => eg.Event)
                 .WithMany(e => e.EventGuests)
                 .HasForeignKey(eg => eg.EventID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }
