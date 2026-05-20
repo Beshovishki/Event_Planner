@@ -12,8 +12,7 @@ namespace EventPlanner.Models
 
             // ⚡️ Локалната база за миграции
             //optionsBuilder.UseSqlite("Data Source=LocalDB/eventplanner_local.db");
-            var connectionString = "from config";
-            optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseNpgsql("YOUR_CONNECTION_STRING");
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
