@@ -16,7 +16,7 @@ namespace EventPlanner.Controllers
 
         // GET: Events
 
-        public async Task<IActionResult> Index(bool showArchived = false)
+        /*public async Task<IActionResult> Index(bool showArchived = false)
         {
             var events = await _context.Events
                     .Where(e => e.EventDate >= DateTime.Now || (e.EventDate.AddDays(5) >= DateTime.Now && e.IsArchived == false)) // Включва бъдещи събития и събития, които не са архивирани
@@ -25,9 +25,30 @@ namespace EventPlanner.Controllers
                     .ToListAsync();
 
             return View(events);
+        }*/
+
+        public async Task<IActionResult> Index(bool showArchived = false)
+        {
+            var now = DateTime.UtcNow;
+            var limit = now.AddDays(5);
+
+            var events = await _context.Events
+                .Where(e =>
+                    e.IsArchived == false &&
+                    (
+                        e.EventDate >= now ||
+                        e.EventDate <= limit
+                    )
+                )
+                .Include(e => e.Ratings)
+                .OrderBy(e => e.EventDate)
+                .ToListAsync();
+
+            return View(events);
         }
-      //GET: Events/Archive
-        public async Task<IActionResult> Archive()
+
+        //GET: Events/Archive
+        /*public async Task<IActionResult> Archive()
         {
             // Зареждаме събития, които са преминали повече от 5 дни след датата им
             var archivedEvents = await _context.Events
@@ -37,7 +58,23 @@ namespace EventPlanner.Controllers
                 .ToListAsync();
 
             return View(archivedEvents); // Връщаме към изгледа за архивираните събития
+        }*/
+
+        public async Task<IActionResult> Archive()
+        {
+            var cutoff = DateTime.UtcNow.AddDays(-5);
+
+            var archivedEvents = await _context.Events
+                .Where(e =>
+                    e.EventDate < cutoff
+                )
+                .Include(e => e.Ratings)
+                .OrderBy(e => e.EventDate)
+                .ToListAsync();
+
+            return View(archivedEvents);
         }
+
 
         // GET: Events/Create
         public IActionResult Create()
@@ -218,14 +255,29 @@ namespace EventPlanner.Controllers
             return View(events);
         }
         //Взимане на предстоящи събития 5 дни напред
-        public IActionResult GetUpcomingEventCount()
+        /*public IActionResult GetUpcomingEventCount()
         {
             var count = _context.Events
                 .Where(e => e.EventDate.Date >= DateTime.Now.Date && e.EventDate.Date <= DateTime.Now.Date.AddDays(5))
                 .Count();
 
             return Json(new { count });
+        }*/
+
+        public IActionResult GetUpcomingEventCount()
+        {
+            var now = DateTime.UtcNow.Date;
+            var limit = now.AddDays(5);
+
+            var count = _context.Events
+                .Count(e =>
+                    e.EventDate >= now &&
+                    e.EventDate <= limit
+                );
+
+            return Json(new { count });
         }
+
         //Взимане на оценка
         public int GetVoteCount(int eventId)
         {
